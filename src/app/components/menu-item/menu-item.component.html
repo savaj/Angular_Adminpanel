@@ -1,0 +1,12 @@
+<ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main" >
+    <li class="has-sub nav-item open">
+      <a (click)="handleMainMenuAction()"
+      [ngClass]="{active: isMainActive || isOneOfChildrenActive}"><i class="{{menuItem.iconClasses}}"
+      *ngIf="isExpandable && menuItem.children.length > 0"></i><span class="menu-title">{{ menuItem.name }}</span></a>
+      <ul class="menu-content" *ngFor="let child of menuItem.children">
+       <li><a [routerLink]="child.path"
+          [routerLinkActive]="'active'" class="menu-item">{{ child.name }}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
