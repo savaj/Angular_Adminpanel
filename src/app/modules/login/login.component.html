@@ -1,0 +1,88 @@
+<!--Login Page Starts-->
+<section id="regestration">
+    <div class="container-fluid">
+        <div class="row full-height-vh">
+            <div class="col-12 d-flex align-items-center justify-content-center gradient-aqua-marine">
+                <div class="card px-4 py-2 box-shadow-2">
+                    <div class="card-header text-center">
+                        <img src="../../../assets/img/logos/logo-color-big.png" alt="company-logo" class="mb-3"
+                            width="80">
+                        <h4 class="text-uppercase text-bold-400 grey darken-1">Login</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-block mx-auto">
+                            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label for="inputEmail">Username<span class="required">*</span></label>
+                                            <input type="email" class="form-control form-control-lg"
+                                                formControlName="email" id="inputEmail" placeholder="Username"
+                                                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+                                            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                                                <div *ngIf="f['email'].errors['required']">Username is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label for="inputPass">Password<span class="required">*</span></label>
+                                            <input type="password" class="form-control form-control-lg"
+                                                formControlName="password" id="inputPass" placeholder="Password"
+                                                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                                            <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                                                <div *ngIf="f['password'].errors['required']">Password is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label for="inputCaptcha">Captcha<span class="required">*</span></label>
+                                            <input type="text" class="form-control form-control-lg"
+                                                formControlName="captcha" id="inputCaptcha" placeholder="Captcha"
+                                                [ngClass]="{ 'is-invalid': submitted && f['captcha'].errors }">
+                                            <div *ngIf="submitted && f['captcha'].errors" class="invalid-feedback">
+                                                <div *ngIf="f['captcha'].errors['required']">Captcha is required.</div>
+                                            </div>
+                                            <div class="row pt-2 pl-1">
+                                                <div class="col-md-6">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{num1}} {{operator}} {{num2}}</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title" (click)="generateCaptcha()">
+                                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div *ngIf="!captchaValid" class="invalid-feedback">
+                                                Invalid captcha. Please try again.</div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group text-center">
+                                    <button type="submit"
+                                        class="btn btn-danger px-4 py-2 text-uppercase white font-small-4 box-shadow-2 border-0">Login</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Login Page Ends-->
