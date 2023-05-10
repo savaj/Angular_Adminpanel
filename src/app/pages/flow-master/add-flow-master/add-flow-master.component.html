@@ -1,0 +1,98 @@
+<div class="container-fluid">
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-warning">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="card-title" id="basic-layout-form-center">Add Users</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a [routerLink]="['/flow-master']" class="btn mr-1 shadow-z-2 btn-primary float-right">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" [formGroup]="flow_master" (ngSubmit)="onSubmit()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-body">
+                                            <!-- <h4 class="form-section">
+                                                <i class="icon-user"></i>Personal Details</h4> -->
+                                             <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1">Designation<span class="required">*</span></label>
+                                                            <select id="projectinput1" formControlName="designation" class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['designation'].errors }">
+                                                                <option value="" disabled="">Designation</option>
+                                                                <option value="sr-backenddeveloper">Sr.backend Developer</option>
+                                                                <option value="Project Manager">Project Manager</option>
+                                                                <option value="Manager">Manager</option>
+                                                                <option value="DGM">dgm</option>
+                                                            </select>
+                                                            <div *ngIf="submitted && f['designation'].errors" class="invalid-feedback">
+                                                                <div *ngIf="f['designation'].errors['required']">Designation is required</div>
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput2">Send From<span class="required">*</span></label>
+                                                            <select id="projectinput2" formControlName="send_from" class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['send_from'].errors }">
+                                                                <option value="" disabled="">Send From</option>
+                                                                <option value="sr-backenddeveloper">Sr.backend Developer</option>
+                                                                <option value="Project Manager">Project Manager</option>
+                                                                <option value="Manager">Manager</option>
+                                                                <option value="DGM">dgm</option>
+                                                            </select>
+                                                            <div *ngIf="submitted && f['send_from'].errors" class="invalid-feedback">
+                                                                <div *ngIf="f['send_from'].errors['send_from']">Send From is required</div>
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                             </div>
+                                             <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3">Send To<span class="required">*</span></label>
+                                                        <select id="projectinput3" formControlName="send_to" class="form-control"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['send_to'].errors }">
+                                                            <option value="">Send To</option>
+                                                            <option value="sr-backenddeveloper">Sr.backend Developer</option>
+                                                            <option value="Project Manager">Project Manager</option>
+                                                            <option value="Manager">Manager</option>
+                                                            <option value="DGM">dgm</option>
+                                                        </select>
+                                                        <div *ngIf="submitted && f['send_to'].errors" class="invalid-feedback">
+                                                            <div *ngIf="f['send_to'].errors['send_to']">Send To is required</div>
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions center">
+                                            <button type="button" (click)="onReset()" class="btn btn-danger mr-1">
+                                                <i class="icon-trash"></i> Cancel
+                                            </button>
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="icon-note"></i> Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
