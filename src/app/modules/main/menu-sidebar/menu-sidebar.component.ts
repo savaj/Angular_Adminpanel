@@ -18,23 +18,39 @@ export class MenuSidebarComponent implements OnInit {
 export const MENU = [
   {
       name: 'Dashboard',
-      iconClasses: '',
+      iconClasses: '/main/dashboard',
+      path: ['/main/dashboard'],
       children: [
         {
             name: 'Dashboard',
             iconClasses: '',
-            path: ['/']
+            path: ['/main/dashboard']
         },
         {
             name: 'User Master',
             iconClasses: '',
-            path: ['/users']
+            path: ['/main/users']
         },
         {
-          name: 'Flow Master',
+          name: 'Role Master',
           iconClasses: '',
-          path: ['/flow-master']
-      },
+          path: ['/main/role-master']
+        },
+        {
+          name: 'Resource Master',
+          iconClasses: '',
+          path: ['/main/resource-master']
+        },
+        {
+          name: 'Right Master',
+          iconClasses: '',
+          path: ['/main/right-master']
+        },
+        {
+          name: 'Menu Master',
+          iconClasses: '',
+          path: ['/main/admin-menu-master']
+        },
     ]
   },
 ];

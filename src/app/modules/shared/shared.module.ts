@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AlertService } from './alert.service';
 
 
 @NgModule({
@@ -11,6 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     ReactiveFormsModule
-  ]
+  ],
+  providers: [
+    AlertService
+  ],
 })
 export class SharedModule { }

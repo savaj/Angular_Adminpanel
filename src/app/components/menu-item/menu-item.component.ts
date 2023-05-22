@@ -18,6 +18,7 @@ export class MenuItemComponent implements OnInit {
   public isMainActive: boolean = false;
   public isOneOfChildrenActive: boolean = false;
   constructor(private router: Router) { }
+  activeMenuItem: string = '/main/dashboard';
 
   ngOnInit(): void {
     console.log('menuItem', this.menuItem);
@@ -35,6 +36,10 @@ export class MenuItemComponent implements OnInit {
           this.calculateIsActive(event.url);
           return;
       });
+  }
+
+  setActiveMenuItem(menuItem: string): void {
+    this.activeMenuItem = menuItem;
   }
   
   public handleMainMenuAction() {
