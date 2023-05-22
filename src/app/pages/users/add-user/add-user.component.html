@@ -5,146 +5,195 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title-wrap bar-warning">
-                            <div class="row">
+                            <div class="row pt-3">
                                 <div class="col-md-6">
-                                    <h4 class="card-title" id="basic-layout-form-center">Add Users</h4>
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="isAddMode">{{MY_CONSTANT.user.addUser}}</h4>
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="!isAddMode">{{MY_CONSTANT.user.editUser}}
+                                    </h4>
                                 </div>
                                 <div class="col-md-6">
-                                    <a [routerLink]="['/users']" class="btn mr-1 shadow-z-2 btn-primary float-right">Back</a>
+                                    <a [routerLink]="['/main/users']"
+                                        class="btn mr-1 shadow-z-2 btn-primary float-right">{{MY_CONSTANT.back}}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="px-3">
-                            <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <form class="form" [formGroup]="addEditUserForm" (ngSubmit)="onSubmit()">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-body">
                                             <h4 class="form-section">
-                                                <i class="icon-user"></i> Personal Details</h4>
-                                             <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1">First Name<span class="required">*</span></label>
-                                                            <input type="text" formControlName="fname" id="projectinput1" class="form-control"
-                                                            placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && f['fname'].errors }">
-
-                                                            <div *ngIf="submitted && f['fname'].errors" class="invalid-feedback">
-                                                                <div *ngIf="f['fname'].errors['required']">Firstname is required</div>
-                                                              </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput2">Last Name<span class="required">*</span></label>
-                                                            <input type="text" formControlName="lname" id="projectinput2" class="form-control"
-                                                            placeholder="Last Name" [ngClass]="{ 'is-invalid': submitted && f['lname'].errors }">
-
-                                                            <div *ngIf="submitted && f['lname'].errors" class="invalid-feedback">
-                                                                <div *ngIf="f['lname'].errors['required']">Lastname is required</div>
-                                                              </div>
-                                                        </div>
-                                                    </div>
-                                             </div>
-                                             <div class="row">
+                                                <i class="icon-user"></i> {{MY_CONSTANT.user.userPersonalDetailsHeading}}
+                                            </h4>
+                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput3">E-mail<span class="required">*</span></label>
-                                                        <input type="text" formControlName="email" id="projectinput3" class="form-control"
-                                                        placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
-                                                        
-                                                        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-                                                            <div *ngIf="f['email'].errors['required']">Email is required</div>
-                                                          </div>
+                                                        <label for="projectinput1">{{MY_CONSTANT.user.field.firstname}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="firstname"
+                                                            id="projectinput1" class="form-control"
+                                                            placeholder="First Name"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['firstname'].errors }">
+
+                                                        <div *ngIf="submitted && f['firstname'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['firstname'].errors['required']">{{MY_CONSTANT.user.required.firstname}}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput4">Mobile Number<span class="required">*</span></label>
-                                                        <input type="text" formControlName="mobilenumber" id="projectinput4" class="form-control"
-                                                        placeholder="Mobile Number" [ngClass]="{ 'is-invalid': submitted && f['mobilenumber'].errors }">
+                                                        <label for="projectinput2">{{MY_CONSTANT.user.field.lastname}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="middlename"
+                                                            id="projectinput2" class="form-control"
+                                                            placeholder="Last Name"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['middlename'].errors }">
 
-                                                        <div *ngIf="submitted && f['mobilenumber'].errors" class="invalid-feedback">
-                                                            <div *ngIf="f['mobilenumber'].errors['required']">Mobile Number is required</div>
-                                                          </div>
+                                                        <div *ngIf="submitted && f['middlename'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['middlename'].errors['required']">{{MY_CONSTANT.user.required.lastname}}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="projectinput5">Password<span class="required">*</span></label>
-                                                        <input type="password" formControlName="password" id="projectinput5" class="form-control" 
-                                                        placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                                                        <label for="projectinput3">{{MY_CONSTANT.user.field.email}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="email" id="projectinput3"
+                                                            class="form-control" placeholder="Email"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
 
-                                                        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-                                                            <div *ngIf="f['password'].errors['required']">Password is required</div>
-                                                          </div>
+                                                        <div *ngIf="submitted && f['email'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['email'].errors['required']">{{MY_CONSTANT.user.required.email}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="help-block" *ngIf="f['email'].errors && f['email'].dirty && f['email'].touched">
+                                                            <ul role="alert">
+                                                                <li *ngIf="f['email'].errors['pattern']">{{MY_CONSTANT.user.validEmail}}</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectinput6">Designation<span class="required">*</span></label>
-                                                        <input type="text" formControlName="designation" id="projectinput6" class="form-control"
-                                                        placeholder="Designation" [ngClass]="{ 'is-invalid': submitted && f['designation'].errors }">
 
-                                                        <div *ngIf="submitted && f['designation'].errors" class="invalid-feedback">
-                                                            <div *ngIf="f['designation'].errors['required']">Designation is required</div>
-                                                          </div>
+                                                    <div class="form-group">
+                                                        <label for="projectinput4">{{MY_CONSTANT.user.field.mobilenumber}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="mobile_number"
+                                                            id="projectinput4" class="form-control"
+                                                            placeholder="Mobile Number"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['mobile_number'].errors }">
+
+                                                        <div *ngIf="submitted && f['mobile_number'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['mobile_number'].errors['required']">{{MY_CONSTANT.user.required.mobilenumber}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="help-block"
+                                                            *ngIf="f['mobile_number'].errors && f['mobile_number'].dirty && f['mobile_number'].touched">
+                                                            <ul role="alert" class="required">
+                                                                <li *ngIf="f['mobile_number'].errors['pattern']">{{MY_CONSTANT.user.validmobile}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput6">{{MY_CONSTANT.user.field.designation}}<span
+                                                                class="required">*</span></label>
+
+                                                        <select id="projectinput6" formControlName="designation"
+                                                            class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['designation'].errors }">
+                                                            <option value="" disabled="">{{MY_CONSTANT.user.field.designation}}</option>
+                                                            <option *ngFor="let option of roleData; let i = index;"
+                                                                value="{{option.id}}">
+                                                                {{ option.role_name }}</option>
+                                                        </select>
+
+                                                        <div *ngIf="submitted && f['designation'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['designation'].errors['required']">{{MY_CONSTANT.user.required.designation}}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <h4 class="form-section">
-                                                <i class="icon-book-open"></i>Department Details</h4>
-    
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput7">Department<span class="required">*</span></label>
-                                                            <input type="text" formControlName="department" id="projectinput7" class="form-control"
-                                                            placeholder="Department" [ngClass]="{ 'is-invalid': submitted && f['department'].errors }">
+                                                <i class="icon-book-open"></i>{{MY_CONSTANT.user.userDepartmentDetailsHeading}}
+                                            </h4>
 
-                                                            <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
-                                                                <div *ngIf="f['department'].errors['required']">Department is required</div>
-                                                              </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput8">HOD<span class="required">*</span></label>
-                                                            <input type="text" formControlName="hod" id="projectinput8" class="form-control"
-                                                            placeholder="HOD" [ngClass]="{ 'is-invalid': submitted && f['hod'].errors }">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput7">{{MY_CONSTANT.user.field.department}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="department"
+                                                            id="projectinput7" class="form-control"
+                                                            placeholder="Department"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['department'].errors }">
 
-                                                            <div *ngIf="submitted && f['hod'].errors" class="invalid-feedback">
-                                                                <div *ngIf="f['hod'].errors['required']">HOD is required</div>
-                                                              </div>
+                                                        <div *ngIf="submitted && f['department'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['department'].errors['required']">{{MY_CONSTANT.user.required.department}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput9">Branch<span class="required">*</span></label>
-                                                            <input type="text" formControlName="branch" id="projectinput9" class="form-control"
-                                                            placeholder="Branch" [ngClass]="{ 'is-invalid': submitted && f['branch'].errors }">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput8">{{MY_CONSTANT.user.field.hod}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="hod" id="projectinput8"
+                                                            class="form-control" placeholder="HOD"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['hod'].errors }">
 
-                                                            <div *ngIf="submitted && f['branch'].errors" class="invalid-feedback">
-                                                                <div *ngIf="f['branch'].errors['required']">Branch is required</div>
-                                                              </div>
+                                                        <div *ngIf="submitted && f['hod'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['hod'].errors['required']">{{MY_CONSTANT.user.required.hod}}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput9">{{MY_CONSTANT.user.field.branch}}<span
+                                                                class="required">*</span></label>
+
+                                                        <select id="projectinput9" formControlName="branch"
+                                                            class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['branch'].errors }">
+                                                            <option value="" disabled="">Branch</option>
+                                                            <option *ngFor="let option of branch" [value]="option.name">
+                                                                {{ option.name }}</option>
+                                                        </select>
+
+                                                        <div *ngIf="submitted && f['branch'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['branch'].errors['required']">{{MY_CONSTANT.user.required.branch}}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-actions center">
-                                            <button type="button" (click)="onReset()" class="btn btn-danger mr-1">
-                                                <i class="icon-trash"></i> Cancel
+                                            <button type="submit" class="btn btn-success"
+                                                [disabled]="!addEditUserForm.valid">
+                                                <i class="icon-note"></i> {{MY_CONSTANT.save}}
                                             </button>
-                                            <button type="submit" class="btn btn-success">
-                                                <i class="icon-note"></i> Save
+                                            <button type="button" (click)="onReset()" class="btn btn-danger ml-1">
+                                                <i class="icon-trash"></i> {{MY_CONSTANT.reset}}
                                             </button>
                                         </div>
                                     </div>

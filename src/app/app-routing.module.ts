@@ -11,7 +11,8 @@ const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [NonAuthGuard]
   },
   {
     path: 'main',
@@ -32,8 +33,20 @@ const routes: Routes = [
           loadChildren: () => import('./pages/role-master/role-master.module').then(m => m.RoleMasterModule)
         },
         {
+          path: 'resource-master',
+          loadChildren: () => import('./pages/resource-master/resource-master.module').then(m => m.ResourceMasterModule)
+        },
+        {
+          path: 'right-master',
+          loadChildren: () => import('./pages/right-master/right-master.module').then(m => m.RightMasterModule)
+        },
+        {
           path: 'users',
           loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule)
+        },
+        {
+          path: 'admin-menu-master',
+          loadChildren: () => import('./pages/admin-menu-master/admin-menu-master.module').then(m => m.AdminMenuMasterModule)
         },
         {
             path: 'dashboard',

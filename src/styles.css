@@ -2,6 +2,7 @@
 
 @import 'ngx-toastr/toastr';
 
+
 .required{
   color: red
 }
@@ -62,4 +63,8 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+a.paginate_button.current.page-link.bg-primary {
+  color: #fff !important;
 }

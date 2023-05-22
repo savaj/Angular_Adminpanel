@@ -1,0 +1,126 @@
+<div class="container-fluid">
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-warning">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="isAddMode">{{ADMIN_MENU_CONSTANT.menu.addMenu}}</h4>
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="!isAddMode">{{ADMIN_MENU_CONSTANT.menu.editMenu}}
+                                    </h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a [routerLink]="['/main/admin-menu-master']"
+                                        class="btn mr-1 shadow-z-2 btn-primary float-right">{{ADMIN_MENU_CONSTANT.back}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" [formGroup]="addEditMenuForm" (ngSubmit)="onSubmit()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1">{{ADMIN_MENU_CONSTANT.menu.field.menuname}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="name"
+                                                            id="projectinput1" class="form-control"
+                                                            placeholder="Menu Name"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
+
+                                                        <div *ngIf="submitted && f['name'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['name'].errors['required']">{{ADMIN_MENU_CONSTANT.menu.required.menuname}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput2">{{ADMIN_MENU_CONSTANT.menu.field.menuResource}}<span
+                                                                class="required">*</span></label>
+
+                                                        <select id="projectinput2" formControlName="resource"
+                                                            class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['resource'].errors }">
+                                                            <option value="" disabled="">{{ADMIN_MENU_CONSTANT.menu.field.menuResource}}</option>
+                                                            <option *ngFor="let option of resourceData; let i = index;"
+                                                                value="{{option.id}}">
+                                                                {{ option.resource_name }}</option>
+                                                        </select>
+
+                                                        <div *ngIf="submitted && f['resource'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['resource'].errors['required']">{{ADMIN_MENU_CONSTANT.menu.required.menuResource}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput3">{{ADMIN_MENU_CONSTANT.menu.field.menutype}}<span
+                                                                class="required">*</span></label>
+
+                                                        <select id="projectinput3" formControlName="menutype"
+                                                            class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['menutype'].errors }">
+                                                            <option value="" disabled="">{{ADMIN_MENU_CONSTANT.menu.field.menutype}}</option>
+                                                            <option *ngFor="let option of menuTypeData; let i = index;"
+                                                                value="{{option.menutypeId}}">
+                                                                {{ option.menutypename }}</option>
+                                                        </select>
+
+                                                        <div *ngIf="submitted && f['menutype'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['menutype'].errors['required']">{{ADMIN_MENU_CONSTANT.menu.required.menuType}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group" *ngIf="showChildMenu">
+                                                        <label for="projectinput4">{{ADMIN_MENU_CONSTANT.menu.field.ChildMenu}}<span
+                                                                class="required">*</span></label>
+
+                                                        <select id="projectinput4" formControlName="parent"
+                                                            class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['parent'].errors }">
+                                                            <option value="" disabled="">{{ADMIN_MENU_CONSTANT.menu.field.ChildMenu}}</option>
+                                                            <option *ngFor="let option of resourceData; let i = index;"
+                                                                value="{{option.id}}">
+                                                                {{ option.resource_name }}</option>
+                                                        </select>
+
+                                                        <div *ngIf="submitted && f['parent'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['parent'].errors['required']">{{ADMIN_MENU_CONSTANT.menu.required.ChildMenu}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions center">
+                                            <button type="submit" class="btn btn-success"
+                                                [disabled]="!addEditMenuForm.valid">
+                                                <i class="icon-note"></i> {{ADMIN_MENU_CONSTANT.save}}
+                                            </button>
+                                            <button type="button" (click)="onReset()" class="btn btn-danger ml-1">
+                                                <i class="icon-trash"></i> {{ADMIN_MENU_CONSTANT.reset}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,37 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, first } from 'rxjs';
+import { first } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { AlertService } from 'src/app/modules/shared/alert.service';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
-  selector: 'app-role-master',
-  templateUrl: './role-master.component.html',
-  styleUrls: ['./role-master.component.scss']
+  selector: 'app-resource-master',
+  templateUrl: './resource-master.component.html',
+  styleUrls: ['./resource-master.component.scss']
 })
-export class RoleMasterComponent implements OnInit {
-  readonly ROLE_CONSTANT = GlobalConstants;
+export class ResourceMasterComponent implements OnInit {
+  readonly RESOURCE_CONSTANT = GlobalConstants;
   dtOptions: DataTables.Settings = {};
-  rolesData?: any[];
-  resourceUrl: string = 'roles';
+  resourcesData?: any[];
+  resourceUrl: string = 'resources';
   statusUrl: string = '/status';
   isToggled: boolean = false;
   constructor(private commonService: CommonService, private toastr: ToastrService,
     private router: Router, private sweetAlert: AlertService) { }
 
   ngOnInit(): void {
-    this.roles();
+    this.resources();
   }
-
-  roles(): void {
+  resources(): void {
     this.commonService.getAll(this.resourceUrl)
       .subscribe({
         next: (response: any) => {
-          this.rolesData = response.data;
+          this.resourcesData = response.data;
           setTimeout(() => {
-            $('.roles-datatable').DataTable({
+            $('.resources-datatable').DataTable({
               destroy: true,
               pagingType: 'full_numbers',
               processing: true,
@@ -50,8 +49,7 @@ export class RoleMasterComponent implements OnInit {
         }
       });
    }
-
-  async deleteRole(id: number, is_deleted: boolean) {
+  async deleteResource(id: number, is_deleted: boolean) {
     is_deleted = !is_deleted;
     const confirmed = await this.sweetAlert.ConfirmBox()
       if(confirmed === true){
@@ -60,7 +58,7 @@ export class RoleMasterComponent implements OnInit {
             //sweetalert message popup
             this.toastr.error(response.message);
             this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
-              this.router.navigate([`/main/role-master`]).then(()=>{
+              this.router.navigate([`/main/resource-master`]).then(()=>{
               })
               })
           },
@@ -69,16 +67,15 @@ export class RoleMasterComponent implements OnInit {
           }
         });
       } else {
-        this.toastr.success(this.ROLE_CONSTANT.role.roleSafeMessage);
+        this.toastr.success(this.RESOURCE_CONSTANT.resource.resourceSafeMessage);
       }
   }
-
   async updateStatus(id: number, is_active: number) {
     this.isToggled = is_active === 1 ? false : true;
     this.commonService.update(`${this.resourceUrl}${this.statusUrl}`, id, { is_active: this.isToggled }).pipe(first()).subscribe({
           next: (response) => {
             this.router.navigateByUrl('/',{skipLocationChange:false}).then(()=>{
-              this.router.navigate([`/main/role-master`]).then(()=>{
+              this.router.navigate([`/main/resource-master`]).then(()=>{
               })
               })
            this.toastr.success(response.message);
@@ -88,5 +85,4 @@ export class RoleMasterComponent implements OnInit {
           }
         });
   }
-
 }

@@ -1,0 +1,79 @@
+<div class="container-fluid">
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-warning">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="isAddMode">{{RESOURCE_CONSTANT.resource.addResource}}</h4>
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="!isAddMode">{{RESOURCE_CONSTANT.resource.editResource}}
+                                    </h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a [routerLink]="['/main/resource-master']"
+                                        class="btn mr-1 shadow-z-2 btn-primary float-right">{{RESOURCE_CONSTANT.back}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" [formGroup]="addEditResourceForm" (ngSubmit)="onSubmit()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1">{{RESOURCE_CONSTANT.resource.field.resourcename}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="resource_name"
+                                                            id="projectinput1" class="form-control"
+                                                            placeholder="Resource Name"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['resource_name'].errors }">
+
+                                                        <div *ngIf="submitted && f['resource_name'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['resource_name'].errors['required']">{{RESOURCE_CONSTANT.resource.required.resourcename}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectinput1">{{RESOURCE_CONSTANT.resource.field.resourceurl}}<span
+                                                                class="required">*</span>
+                                                            </label>
+                                                        <input type="text" formControlName="resource_url"
+                                                            id="projectinput1" class="form-control"
+                                                            placeholder="Resource Url"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['resource_url'].errors }">
+
+                                                            <div *ngIf="submitted && f['resource_url'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['resource_url'].errors['required']">{{RESOURCE_CONSTANT.resource.required.resourceurl}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions center">
+                                            <button type="submit" class="btn btn-success"
+                                                [disabled]="!addEditResourceForm.valid">
+                                                <i class="icon-note"></i> {{RESOURCE_CONSTANT.save}}
+                                            </button>
+                                            <button type="button" (click)="onReset()" class="btn btn-danger ml-1">
+                                                <i class="icon-trash"></i> {{RESOURCE_CONSTANT.reset}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

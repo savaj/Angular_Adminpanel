@@ -19,6 +19,8 @@ import { DataTablesModule } from "angular-datatables";
 import { UsersModule } from './pages/users/users.module';
 import { FlowMasterModule } from './pages/flow-master/flow-master.module';
 import { RoleMasterModule } from './pages/role-master/role-master.module';
+import { ResourceMasterModule } from './pages/resource-master/resource-master.module';
+import { RightMasterModule } from './pages/right-master/right-master.module';
 
 
 @NgModule({
@@ -48,8 +50,9 @@ import { RoleMasterModule } from './pages/role-master/role-master.module';
     UsersModule,
     FlowMasterModule,
     RoleMasterModule,
-    DataTablesModule,    
-   
+    ResourceMasterModule,
+    RightMasterModule,
+    DataTablesModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
