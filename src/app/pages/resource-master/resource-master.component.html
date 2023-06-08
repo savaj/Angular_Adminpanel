@@ -11,7 +11,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <a [routerLink]="['add-edit-resource']"
-                                        class="btn mr-1 shadow-z-2 btn-primary float-right">{{RESOURCE_CONSTANT.resource.addResource}}</a>
+                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{RESOURCE_CONSTANT.resource.addResource}}</a>
                                 </div>
                             </div>
                         </div>
@@ -41,12 +41,12 @@
                                         <td>
                                             <div class="form-group mt-1 text-center">
                                                 <a routerLink="add-edit-resource/{{group.id}}"
-                                                class="success p-0 mt-1" data-original-title="" title="">
-                                                    <i class="fa fa-pencil font-medium-3 mr-2"></i>
+                                                class="info p-0 mt-1" data-original-title="" title="">
+                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
                                                 </a>
                                                 <a  class="danger p-0 confirm-text"
                                                     (click)="deleteResource(group.id, group.is_deleted)">
-                                                    <i class="fa fa-trash-o font-medium-3 mr-2"></i>
+                                                    <i class="icon-trash font-medium-3 mr-2"></i>
                                                 </a>
                                             </div>
                                         </td>

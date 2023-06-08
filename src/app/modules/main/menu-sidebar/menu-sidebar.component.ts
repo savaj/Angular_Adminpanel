@@ -51,6 +51,26 @@ export const MENU = [
           iconClasses: '',
           path: ['/main/admin-menu-master']
         },
+        {
+          name: 'Vendor Master',
+          iconClasses: '',
+          path: ['/main/vendor-master']
+        },
+        {
+          name: 'Tender Master',
+          iconClasses: '',
+          path: ['/main/tender-master']
+        },
+        {
+          name: 'Flow Master',
+          iconClasses: '',
+          path: ['/main/flow-master']
+        },
+        {
+          name: 'Bank Guarantee Master',
+          iconClasses: '',
+          path: ['/main/bank-guarantee-master']
+        }        
     ]
   },
 ];

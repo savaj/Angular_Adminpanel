@@ -12,7 +12,11 @@ const routes: Routes = [
   {
     path: 'add-flow-master',
     component: AddFlowMasterComponent
-  }  
+  },
+  {
+    path: 'add-flow-master/:id',
+    component: AddFlowMasterComponent
+  }    
 ];
 
 @NgModule({

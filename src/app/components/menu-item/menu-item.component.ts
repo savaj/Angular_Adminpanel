@@ -21,7 +21,6 @@ export class MenuItemComponent implements OnInit {
   activeMenuItem: string = '/main/dashboard';
 
   ngOnInit(): void {
-    console.log('menuItem', this.menuItem);
     if (
       this.menuItem &&
       this.menuItem.children &&

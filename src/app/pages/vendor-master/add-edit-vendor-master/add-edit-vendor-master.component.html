@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-warning">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="isAddMode">
+                                        {{VENDOR_CONSTANT.vendor.addVendor}}</h4>
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="!isAddMode">
+                                        {{VENDOR_CONSTANT.vendor.editVendor}}
+                                    </h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a [routerLink]="['/main/vendor-master']"
+                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{VENDOR_CONSTANT.back}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" [formGroup]="addEditVendorForm" (ngSubmit)="onSubmit()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput1">{{VENDOR_CONSTANT.vendor.field.vendorname}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="vendor_name"
+                                                            id="projectinput1" class="form-control"
+                                                            placeholder="Company Name"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['vendor_name'].errors }">
+
+                                                        <div *ngIf="submitted && f['vendor_name'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['vendor_name'].errors['required']">
+                                                                {{VENDOR_CONSTANT.vendor.required.vendorname}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput2">{{VENDOR_CONSTANT.vendor.field.vendorAddress}}<span
+                                                                class="required">*</span></label>
+
+                                                        <input type="text" formControlName="vendor_address"
+                                                            id="projectinput2" class="form-control"
+                                                            placeholder="Company Address"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['vendor_address'].errors }">
+
+                                                        <div *ngIf="submitted && f['vendor_address'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['vendor_address'].errors['required']">
+                                                                {{VENDOR_CONSTANT.vendor.required.vendorAddress}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput3">{{VENDOR_CONSTANT.vendor.field.contact_person_name}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="contact_person_name"
+                                                            id="projectinput3" class="form-control"
+                                                            placeholder="Contact Person Name"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['contact_person_name'].errors }">
+
+                                                        <div *ngIf="submitted && f['contact_person_name'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['contact_person_name'].errors['required']">
+                                                                {{VENDOR_CONSTANT.vendor.required.contact_person_name}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput4">{{VENDOR_CONSTANT.vendor.field.contact_person_email}}<span
+                                                                class="required">*</span></label>
+
+                                                        <input type="text" formControlName="contact_person_email"
+                                                            id="projectinput4" class="form-control"
+                                                            placeholder="Contact Person Email"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['contact_person_email'].errors }">
+
+                                                        <div *ngIf="submitted && f['contact_person_email'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['contact_person_email'].errors['required']">
+                                                                {{VENDOR_CONSTANT.vendor.required.contact_person_email}}</div>
+                                                        </div>
+                                                        <div class="help-block warning" *ngIf="f['contact_person_email'].errors && f['contact_person_email'].dirty && f['contact_person_email'].touched">
+                                                            <ul role="alert">
+                                                                <li *ngIf="f['contact_person_email'].errors['pattern']">{{VENDOR_CONSTANT.vendor.validEmail}}(e.g test@example.com)</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput5">{{VENDOR_CONSTANT.vendor.field.contact_person_mobile_no}}<span
+                                                                class="required">*</span></label>
+
+                                                        <input type="text" formControlName="contact_person_mobile_no"
+                                                            id="projectinput5" class="form-control"
+                                                            placeholder="Contact Person Mobile No"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['contact_person_mobile_no'].errors }">
+
+                                                        <div *ngIf="submitted && f['contact_person_mobile_no'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['contact_person_mobile_no'].errors['required']">
+                                                                {{VENDOR_CONSTANT.vendor.required.contact_person_mobile_no}}</div>
+                                                        </div>
+                                                        <div class="help-block warning" *ngIf="f['contact_person_mobile_no'].errors && f['contact_person_mobile_no'].dirty && f['contact_person_mobile_no'].touched">
+                                                            <ul role="alert">
+                                                                <li *ngIf="f['contact_person_mobile_no'].errors['pattern']">{{VENDOR_CONSTANT.vendor.validMobileNo}}(e.g 9854652535)</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions center">
+                                            <button type="submit" class="btn btn-success"
+                                            [disabled]="!addEditVendorForm.valid">
+                                                <i class="icon-plus"></i> {{VENDOR_CONSTANT.save}}
+                                            </button>
+                                            <button type="button" (click)="onReset()" class="btn btn-danger ml-1">
+                                                <i class="icon-trash"></i> {{VENDOR_CONSTANT.reset}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

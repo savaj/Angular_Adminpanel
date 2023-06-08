@@ -39,7 +39,7 @@ export class ResourceMasterComponent implements OnInit {
               drawCallback: function() {
                 $('.dataTables_paginate').addClass('btn btn-sm btn-light');
                 $('.dataTables_paginate > span a').addClass('page-link');
-                $('.dataTables_paginate > span .paginate_button.current').addClass('bg-primary');
+                $('.dataTables_paginate > span .paginate_button.current').addClass('bg-success');
               },
             });
           }, 500);

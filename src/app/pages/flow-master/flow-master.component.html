@@ -10,7 +10,7 @@
                                     <h4 class="card-title">Flow Master</h4>
                                 </div>
                                 <div class="col-md-6">
-                                    <a [routerLink]="['add-flow-master']" class="btn mr-1 shadow-z-2 btn-primary float-right">Add
+                                    <a [routerLink]="['add-flow-master']" class="btn mr-1 shadow-z-2 btn-success float-right">Add
                                         Flow Master</a>
                                 </div>
                             </div>
@@ -21,60 +21,36 @@
                             <p class="card-text">Flow Master Listing</p>
                             <table class="row-border hover">
                             </table>
-                            <table class="table table-striped table-bordered dom-jQuery-events1" datatable>
+                            <table class="table table-striped table-bordered flow-master-datatable" datatable>
                                 <thead>
                                     <tr>
                                         <th>Designation</th>
                                         <th>Send From</th>
                                         <th>Send To</th>
-                                        <th>status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Sr.backend Developer</td>
-                                        <td>Project Manager</td>
-                                        <td>Manager</td>
-                                        <td>
-                                            <label class="switch">
-                                                <input type="checkbox" checked>
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </td>
+                                <tbody *ngIf="flowMasterData.length > 0">
+                                    <tr *ngFor="let group of flowMasterData">
+                                        <td>{{group.designation_name}}</td>
+                                        <td>{{group.send_from}}</td>
+                                        <td>{{group.send_to}}</td>
                                         <td>
                                             <div class="form-group mt-1 text-center">
-                                                <a class="success p-0 mt-1" data-original-title="" title="">
-                                                    <i class="fa fa-pencil font-medium-3 mr-2"></i>
+                                                <a routerLink="add-flow-master/{{group.designation_id}}"
+                                                class="info p-0 mt-1" data-original-title="" title="">
+                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
                                                 </a>
-                                                <a class="danger p-0" data-original-title="" title="" id="confirm-text">
-                                                    <i class="fa fa-trash-o font-medium-3 mr-2"></i>
+                                                <a  class="danger p-0 confirm-text"
+                                                    (click)="deleteFlow(group.designation_id, group.is_deleted)">
+                                                    <i class="icon-trash font-medium-3 mr-2"></i>
                                                 </a>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Project Manager</td>
-                                        <td>Manager</td>
-                                        <td>DGM</td>
-                                        <td>
-                                            <label class="switch">
-                                                <input type="checkbox" checked>
-                                                <span class="slider round"></span>
-                                              </label>
-                                        </td>
-                                        <td>
-                                            <div class="form-group mt-1 text-center">
-                                                <a class="success p-0" data-original-title="" title="">
-                                                    <i class="fa fa-pencil font-medium-3 mr-2"></i>
-                                                </a>
-                                                <a class="danger p-0" data-original-title="" title="" id="steps">
-                                                    <i class="fa fa-trash-o font-medium-3 mr-2"></i>
-                                                </a>
-                                                <!-- <button type="button" class="btn btn-primary btn-block"  >Confirm Text</button> -->
-                                            </div>
-                                        </td>
-                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="flowMasterData.length === 0">
+                                    <td>No Data Found</td>
                                 </tbody>
                             </table>
                         </div>

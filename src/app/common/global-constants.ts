@@ -1,6 +1,8 @@
 export class GlobalConstants {
     public static apiURL: string = "/api/";
     public static authText: string = "Authorization";
+    public static authorizationUserText: string = "auth.user";
+    public static authorizationPassText: string = "auth.pass";
     public static bearerText: string = 'Bearer ';
     public static token: string = 'token';
     public static deleteConfirmMessage: string = "Are you sure to delete?";
@@ -19,6 +21,10 @@ export class GlobalConstants {
     public static resource_heading: string = "Resources";
     public static rightmasterHeading:string = "Rights";
     public static menuHeading: string = "Menus";
+    public static bankHeading: string = "Bank Guarantees";
+    public static vendorsHeading: string = "Vendors";
+    public static tendorsHeading: string = "Tenders";
+
     public static user = {
         addUser: 'Add User',
         editUser: 'Edit User',
@@ -117,5 +123,107 @@ export class GlobalConstants {
             menuType: 'Menu Type is required',
             ChildMenu: 'Child Menu is required'
         }
+    }
+
+    public static bank = {
+        addBank: 'Add BankGuarantee',
+        editBank: 'Edit BankGuarantee',
+        banksListing: 'BankGuarantee Listing',
+        bankSafeMessage: 'BankGuarantee is Safe',
+        field: {
+            bankname: 'Bank Name',
+            bankbranch: 'Bank Branch',
+            bankifsccode: 'Bank IFSC Code',
+            bankCheckNumber: 'Check Number',
+            bankDDNumber: 'DD Number',
+            bankNeftNumber: 'Transaction number',
+            bankaddress: 'Bank Address',
+            bankvalidtilldate: 'Valid till date',
+            companyname: 'Company Name',
+            bg_number: 'Bg Number',
+            file_no: 'File Number',
+            tendor: 'Tender',
+            vendor: 'Vendor',
+            remarks: 'Remarks',
+            bg_doc: 'BG Documents',
+            amount: 'Amount',
+            bg_type: 'BG Type',
+        },
+        required: {
+            bankname: 'Bank Name is required',
+            bankbranch: 'Bank Branch is required',
+            bankifsccode: 'Bank IFSC Code is required',
+            bankaddress: 'Bank Address is required',
+            bankvalidtilldate: 'Valid till date is required',
+            companyname: 'Company Name is required',
+            bg_number: 'Bg Number is required',
+            file_no: 'File Number is required',
+            tendor: 'Tender is required',
+            vendor: 'Vendor is required',
+            remarks: 'Remarks is required',
+            bg_doc: 'Please upload file',
+            amount: 'Amount is required',
+            bg_type: 'BG Type is required',
+            bankCheckNumber: 'Check Number is required',
+            bankDDNumber: 'DD Number is required',
+            bankNeftNumber: 'Transaction Number is required'
+        },
+        maxLength: {
+            bankCheckNumber_maxLen: 'Bank Check Number max length 5 digit',
+            bankDDNumber_maxLen: 'Bank DD Number max length 5 digit',
+            bankNEFTNumber_maxLen: 'Bank Transaction Number max length 5 digit'
+        },
+        amount_minlength: "Please enter minimum 5 digit",
+        amount_maxlength: "Please enter maximum 10 digit",
+    }
+
+    public static flow = {
+        flowSafeMessage: 'FlowData is Safe',
+    }
+
+    public static vendor = {
+        addVendor: 'Add Vendor',
+        editVendor: 'Edit Vendor',
+        vendorsListing: 'Vendors Listing',
+        validEmail: 'Please Enter Valid mail',
+        validMobileNo: 'Please Enter Valid mobile no',
+        field: {
+            id: 'id',
+            vendorname: 'Company Name',
+            vendorAddress: 'Company Address',
+            contact_person_name: 'Contact Person Name',
+            contact_person_email: 'Contact Person Email',
+            contact_person_mobile_no: 'Contact Person Mobile No'
+        },
+        required: {
+            vendorname: 'Company Name is required',
+            vendorAddress: 'Company Address is required',
+            contact_person_name: 'Contact Person Name is required',
+            contact_person_email: 'Contact Person Email is required',
+            contact_person_mobile_no: 'Contact Person Mobile No is required'
+        }  
+    }
+
+    public static tendor = {
+        addTendor: 'Add Tender',
+        editTendor: 'Edit Tender',
+        tendorsListing: 'Tenders Listing',
+        field: {
+            id: 'id',
+            tendor_name: 'Tender Name',
+            tendor_number: 'Tender Number',
+            tendor_document: 'Tender Document',
+            work_order_issue_date: 'Work Order Issue Date',
+            work_order_no: 'Work Order No',
+            work_order_document: 'Work Order Document'
+        },
+        required: {
+            tendor_name: 'Tender Name is required',
+            tendor_number: 'Tender Number is required',
+            tendor_document: 'Please select Tender Document',
+            work_order_issue_date: 'Work Order issue date is required',
+            work_order_no: 'Work Order No is required',
+            work_order_document: 'Please select Work Order Document'
+        }  
     }
 }

@@ -49,6 +49,22 @@ const routes: Routes = [
           loadChildren: () => import('./pages/admin-menu-master/admin-menu-master.module').then(m => m.AdminMenuMasterModule)
         },
         {
+          path: 'bank-guarantee-master',
+          loadChildren: () => import('./pages/bankdetails-master/bankdetails-master.module').then(m => m.BankdetailsMasterModule)
+        },
+        {
+          path: 'flow-master',
+          loadChildren: () => import('./pages/flow-master/flow-master.module').then(m => m.FlowMasterModule)
+        },
+        {
+          path: 'vendor-master',
+          loadChildren: () => import('./pages/vendor-master/vendor-master.module').then(m => m.VendorMasterModule)
+        },
+        {
+          path: 'tender-master',
+          loadChildren: () => import('./pages/tender-master/tender-master.module').then(m => m.TenderMasterModule)
+        },
+        {
             path: 'dashboard',
             component: DashboardComponent
         }

@@ -7,81 +7,139 @@
                         <div class="card-title-wrap bar-warning">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4 class="card-title" id="basic-layout-form-center">Add Users</h4>
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="isAddMode">Add Flow master</h4>
+                                    <h4 class="card-title" id="basic-layout-form-center" *ngIf="!isAddMode">Edit Flow master</h4>
+
                                 </div>
                                 <div class="col-md-6">
-                                    <a [routerLink]="['/flow-master']" class="btn mr-1 shadow-z-2 btn-primary float-right">Back</a>
+                                    <div class="fonticon-wrap float-left">
+                                        <i class="ft-rotate-cw rotate-icon" (click)="onReset()"></i>
+                                    </div>
+                                    <a [routerLink]="['/main/flow-master']"
+                                        class="btn mr-1 shadow-z-2 btn-success float-right">Back</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="px-3">
-                            <form class="form" [formGroup]="flow_master" (ngSubmit)="onSubmit()">
+                            <form class="form" [formGroup]="flow_masterForm" (ngSubmit)="onSubmit()">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-body">
-                                            <!-- <h4 class="form-section">
-                                                <i class="icon-user"></i>Personal Details</h4> -->
-                                             <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1">Designation<span class="required">*</span></label>
-                                                            <select id="projectinput1" formControlName="designation" class="form-control"
-                                                            [ngClass]="{ 'is-invalid': submitted && f['designation'].errors }">
-                                                                <option value="" disabled="">Designation</option>
-                                                                <option value="sr-backenddeveloper">Sr.backend Developer</option>
-                                                                <option value="Project Manager">Project Manager</option>
-                                                                <option value="Manager">Manager</option>
-                                                                <option value="DGM">dgm</option>
-                                                            </select>
-                                                            <div *ngIf="submitted && f['designation'].errors" class="invalid-feedback">
-                                                                <div *ngIf="f['designation'].errors['required']">Designation is required</div>
-                                                              </div>
+                                            <div class="row ml-4">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="ng-autocomplete">
+                                                                    <ng-autocomplete [data]="data"
+                                                                        formControlName="designation"
+                                                                        [searchKeyword]="keyword"
+                                                                        placeholder="Select Designation"
+                                                                        [itemTemplate]="itemTemplate"
+                                                                        [notFoundTemplate]="notFoundTemplate">
+                                                                    </ng-autocomplete>
+    
+                                                                    <ng-template #itemTemplate let-item>
+                                                                        <a [innerHTML]="item.name"></a>
+                                                                    </ng-template>
+    
+                                                                    <ng-template #notFoundTemplate let-notFound>
+                                                                        <div [innerHTML]="notFound"></div>
+                                                                    </ng-template>
+                                                                </div>
+                                                                <div *ngIf="submitted && flow_masterForm.controls['designation'].errors"
+                                                                    class="error-message">
+                                                                    <div *ngIf="flow_masterForm.controls['designation'].errors['required']">Designation is required.</div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput2">Send From<span class="required">*</span></label>
-                                                            <select id="projectinput2" formControlName="send_from" class="form-control"
-                                                            [ngClass]="{ 'is-invalid': submitted && f['send_from'].errors }">
-                                                                <option value="" disabled="">Send From</option>
-                                                                <option value="sr-backenddeveloper">Sr.backend Developer</option>
-                                                                <option value="Project Manager">Project Manager</option>
-                                                                <option value="Manager">Manager</option>
-                                                                <option value="DGM">dgm</option>
-                                                            </select>
-                                                            <div *ngIf="submitted && f['send_from'].errors" class="invalid-feedback">
-                                                                <div *ngIf="f['send_from'].errors['send_from']">Send From is required</div>
-                                                              </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="ng-autocomplete">
+                                                                    <ng-autocomplete [data]="data"
+                                                                        formControlName="send_from"
+                                                                        [searchKeyword]="keyword"
+                                                                        placeholder="Select Send From"
+                                                                        [itemTemplate]="itemTemplate"
+                                                                        [notFoundTemplate]="notFoundTemplate">
+                                                                    </ng-autocomplete>
+    
+                                                                    <ng-template #itemTemplate let-item>
+                                                                        <a [innerHTML]="item.name"></a>
+                                                                    </ng-template>
+    
+                                                                    <ng-template #notFoundTemplate let-notFound>
+                                                                        <div [innerHTML]="notFound"></div>
+                                                                    </ng-template>
+                                                                </div>
+    
+                                                                <div *ngIf="submitted && flow_masterForm.controls['send_from'].errors"
+                                                                    class="error-message">
+                                                                    <div *ngIf="flow_masterForm.controls['send_from'].errors['required']">Send From is required.</div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                             </div>
-                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectinput3">Send To<span class="required">*</span></label>
-                                                        <select id="projectinput3" formControlName="send_to" class="form-control"
-                                                        [ngClass]="{ 'is-invalid': submitted && f['send_to'].errors }">
-                                                            <option value="">Send To</option>
-                                                            <option value="sr-backenddeveloper">Sr.backend Developer</option>
-                                                            <option value="Project Manager">Project Manager</option>
-                                                            <option value="Manager">Manager</option>
-                                                            <option value="DGM">dgm</option>
-                                                        </select>
-                                                        <div *ngIf="submitted && f['send_to'].errors" class="invalid-feedback">
-                                                            <div *ngIf="f['send_to'].errors['send_to']">Send To is required</div>
-                                                          </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="ng-autocomplete">
+                                                                    <ng-autocomplete [data]="data" formControlName="send_to"
+                                                                        [searchKeyword]="keyword"
+                                                                        placeholder="Select Send To"
+                                                                        [itemTemplate]="itemTemplate"
+                                                                        [notFoundTemplate]="notFoundTemplate">
+                                                                    </ng-autocomplete>
+    
+                                                                    <ng-template #itemTemplate let-item>
+                                                                        <a [innerHTML]="item.name"></a>
+                                                                    </ng-template>
+    
+                                                                    <ng-template #notFoundTemplate let-notFound>
+                                                                        <div [innerHTML]="notFound"></div>
+                                                                    </ng-template>
+                                                                </div>
+                                                                <div *ngIf="submitted && flow_masterForm.controls['send_to'].errors"
+                                                                    class="error-message">
+                                                                    <div *ngIf="flow_masterForm.controls['send_to'].errors['required']">Send To is required.</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                             </div>
+
                                         </div>
+                                        <button type="button" class="btn float-right btn-success add" (click)="addField()">Add</button>
+                                        <table class="table table-striped table-bordered" *ngIf="previewData.length > 0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Designation</th>
+                                                    <th>Send From</th>
+                                                    <th>Send To</th>
+                                                    <th>action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="previewData.length > 0">
+                                                <tr *ngFor="let group of previewData; let i= index">
+                                                    <td>{{group.designation.name}}</td>
+                                                    <td>{{group.send_from.name}}</td>
+                                                    <td>{{group.send_to.name}}</td>
+                                                    <td>
+                                                        <div class="row">
+                                                            <a (click)="swapRank(previewData.length, i, i-1, 'up')"><i class="icon-arrow-up ml-2 mr-2 font-medium-3"></i></a>
+                                                            <a (click)="swapRank(previewData.length, i, i+1, 'down')"><i class="icon-arrow-down mr-2 font-medium-3"></i></a>
+                                                            <div class="form-group text-center">
+                                                                <a  class="danger p-0 confirm-text"
+                                                                    (click)="removeField(i)">
+                                                                    <i class="fa fa-trash-o font-medium-3 mr-2"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                         <div class="form-actions center">
-                                            <button type="button" (click)="onReset()" class="btn btn-danger mr-1">
+                                            <!-- <button type="button" (click)="onReset()" class="btn btn-danger mr-1">
                                                 <i class="icon-trash"></i> Cancel
-                                            </button>
+                                            </button> -->
                                             <button type="submit" class="btn btn-success">
                                                 <i class="icon-note"></i> Save
                                             </button>

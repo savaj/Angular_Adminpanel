@@ -21,6 +21,8 @@ import { FlowMasterModule } from './pages/flow-master/flow-master.module';
 import { RoleMasterModule } from './pages/role-master/role-master.module';
 import { ResourceMasterModule } from './pages/resource-master/resource-master.module';
 import { RightMasterModule } from './pages/right-master/right-master.module';
+import { BankdetailsMasterModule } from './pages/bankdetails-master/bankdetails-master.module';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { RightMasterModule } from './pages/right-master/right-master.module';
   ],
   imports: [
     BrowserModule,
+    AutocompleteLibModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -52,6 +55,7 @@ import { RightMasterModule } from './pages/right-master/right-master.module';
     RoleMasterModule,
     ResourceMasterModule,
     RightMasterModule,
+    BankdetailsMasterModule,
     DataTablesModule,
   ],
   providers: [],

@@ -2,10 +2,10 @@
 <section id="regestration">
     <div class="container-fluid">
         <div class="row full-height-vh">
-            <div class="col-12 d-flex align-items-center justify-content-center gradient-aqua-marine">
+            <div class="col-12 d-flex align-items-center justify-content-center gradient-crystal-clear">
                 <div class="card px-4 py-2 box-shadow-2">
                     <div class="card-header text-center">
-                        <img src="../../../assets/img/logos/logo-color-big.png" alt="company-logo" class="mb-3"
+                        <img src="../../../assets/img/logos/logo-big-black.png" alt="company-logo" class="mb-3"
                             width="80">
                         <h4 class="text-uppercase text-bold-400 grey darken-1">Login</h4>
                     </div>
@@ -51,16 +51,18 @@
                                             </div>
                                             <div class="row pt-2 pl-1">
                                                 <div class="col-md-6">
-                                                    <div class="card">
+                                                    <div class="card border border-primary">
                                                         <div class="card-body">
-                                                            <h5 class="card-title">{{num1}} {{operator}} {{num2}}</h5>
+                                                            <label for="captcha">
+                                                                <h5 class="card-title pl-2 pt-2" id="captcha">{{num1}} {{operator}} {{num2}} =</h5>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <h5 class="card-title" (click)="generateCaptcha()">
+                                                            <h5 class="card-title pt-2" (click)="generateCaptcha()">
                                                                 <i class="fa fa-refresh" aria-hidden="true"></i>
                                                             </h5>
                                                         </div>

@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://localhost:5000'
+  apiURL: 'http://localhost:3000',
+  couchDBURL: 'http://10.10.2.150:5984',
+  couchDBUSER: 'admin',
+  couchDBPASS: 'admin123'
 };
 
 /*

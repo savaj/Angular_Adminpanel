@@ -41,7 +41,7 @@ export class AdminMenuMasterComponent implements OnInit {
               drawCallback: function () {
                 $('.dataTables_paginate').addClass('btn btn-sm btn-light');
                 $('.dataTables_paginate > span a').addClass('page-link');
-                $('.dataTables_paginate > span .paginate_button.current').addClass('bg-primary');
+                $('.dataTables_paginate > span .paginate_button.current').addClass('bg-success');
               }
             });
           }, 500);
@@ -90,21 +90,73 @@ export class AdminMenuMasterComponent implements OnInit {
         this.toastr.error(err.error.message);
       },
       complete: () => {
-          console.log('completed');
+        console.log('completed');
       }
     });
   }
 
-  swapRank(item: any, direction: number): void {
-    const currentIndex = this.menuData?.findIndex((i: any) => i === item);
-    const newIndex = currentIndex + direction;
-    if (newIndex >= 0 && newIndex < this.menuData.length) {
-      const temp = this.menuData[currentIndex].MenuRank;
-      this.menuData[currentIndex].MenuRank = this.menuData[newIndex].MenuRank;
-      this.menuData[newIndex].MenuRank = temp;
+  swapRank(length: number, index1: any, index2: number, direction: string): void {
+    //console.log(item);
+    // console.log(direction === 1 ? 'up' : 'down');
+    // const currentIndex = this.menuData?.findIndex((i: any) => i === item);
+    // const newIndex = currentIndex + direction;
+    // if (newIndex >= 0 && newIndex < this.menuData.length) {
+    //   const temp = this.menuData[currentIndex].MenuRank;
+    //   this.menuData[currentIndex].MenuRank = this.menuData[newIndex].MenuRank;
+    //   this.menuData[newIndex].MenuRank = temp;
+    // }
+    if (index2 === -1 && direction === 'up') {
+      this.toastr.error("Rank is already on top")
+    } else if (index2 === length && direction === 'down') {
+      this.toastr.error("This Rank is last please try different one")
+    } else {
+      [this.menuData[index1], this.menuData[index2]] = [this.menuData[index2], this.menuData[index1]];
+      // if(direction === 'up'){
+      //   const menuResult: any[] = [];
+      // this.menuData.forEach((item) => {
+      //   if(item.MenuRank === 0){
+      //     item.MenuRank = 1;
+      //   } else {
+      //     item.MenuRank = item.MenuRank - 1;
+      //   }
+      //   menuResult.push({ menuId: item.id, menuRank: item.MenuRank });
+      // })
+      // console.log(menuResult);
+      // } else {
+      //   const menuResult: any[] = [];
+      //   this.menuData.forEach((item) => {
+      //     if(item.MenuRank === 0){
+      //       item.MenuRank = 1;
+      //     } else {
+      //       item.MenuRank = item.MenuRank - 1;
+      //     }
+      //     menuResult.push({ menuId: item.id, menuRank: item.MenuRank });
+      //   })
+      // }
+
+      
+      
+      // const rankUrl = '/rank'
+      // this.commonService.updateWithoutId(`${this.resourceUrl}${rankUrl}`, {
+      //   "data": menuResult }).pipe(first()).subscribe({
+      //   next: (response) => {
+      //     this.toastr.success(response.message);
+      //     this.router.navigateByUrl('/', { skipLocationChange: false }).then(() => {
+      //       this.router.navigate([`/main/admin-menu-master`]).then(() => {
+      //       })
+      //     })
+      //     //this.menus();
+      //   },
+      //   error: (err: any) => {
+      //     console.log(err);
+
+      //     this.toastr.error(err.error.message);
+      //   },
+      //   complete: () => {
+      //     console.log('completed');
+      //   }
+      // });
     }
-    console.log(this.menuData[newIndex].id, this.menuData[newIndex].MenuRank);
-    console.log(this.menuData[currentIndex].id, this.menuData[currentIndex].MenuRank);
   }
 
 }

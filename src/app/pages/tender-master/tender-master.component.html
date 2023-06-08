@@ -1,0 +1,70 @@
+<div class="container-fluid">
+    <section id="dom">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <h4 class="card-title">{{TENDOR_CONSTANT.tendorsHeading}}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a [routerLink]="['add-edit-tender']"
+                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{TENDOR_CONSTANT.tendor.addTendor}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body collapse show">
+                        <div class="card-block card-dashboard">
+                            <p class="card-text">{{TENDOR_CONSTANT.tendor.tendorsListing}}</p>
+                            <table class="table table-striped table-bordered tendors-datatable" #dataTable>
+                                <thead>
+                                    <tr>
+                                        <th>{{TENDOR_CONSTANT.tendor.field.tendor_name}}</th>
+                                        <th>{{TENDOR_CONSTANT.tendor.field.tendor_number}}</th>
+                                        <th>{{TENDOR_CONSTANT.tendor.field.tendor_document}}</th>
+                                        <th>{{TENDOR_CONSTANT.tendor.field.work_order_issue_date }}</th>
+                                        <th>{{TENDOR_CONSTANT.tendor.field.work_order_no}}</th>
+                                        <th>{{TENDOR_CONSTANT.tendor.field.work_order_document}}</th>
+                                        <th>{{TENDOR_CONSTANT.status}}</th>
+                                        <th>{{TENDOR_CONSTANT.action}}</th>
+                                    </tr>
+                                </thead> 
+                                 <tbody>
+                                    <tr *ngFor="let group of tendorsData">
+                                        <td>{{group.tendor_name}}</td>
+                                        <td>{{group.tendor_number}}</td>
+                                        <td>{{group.tendor_document_id}}</td>
+                                        <td>{{group.work_order_issue_date | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{group.work_order_no}}</td>
+                                        <td>{{group.work_order_document_id}}</td>
+                                        <td>
+                                            <label class="switch" (change)="updateStatus(group.id, group.is_active)">
+                                                <input type="checkbox" [checked]="group.is_active === 1 ? true : null">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mt-1 text-center">
+                                                <a routerLink="add-edit-tender/{{group.id}}"
+                                                class="info p-0 mt-1" data-original-title="" title="">
+                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
+                                                </a>
+                                                <a  class="danger p-0 confirm-text"
+                                                    (click)="deleteTendor(group.id, group.is_deleted)">
+                                                    <i class="icon-trash font-medium-3 mr-2"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

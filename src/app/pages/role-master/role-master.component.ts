@@ -22,6 +22,7 @@ export class RoleMasterComponent implements OnInit {
     private router: Router, private sweetAlert: AlertService) { }
 
   ngOnInit(): void {
+    this.rolesData = [];
     this.roles();
   }
 
@@ -37,10 +38,13 @@ export class RoleMasterComponent implements OnInit {
               processing: true,
               lengthMenu: [5, 10, 25],
               responsive: true,
+              "language": {
+                "emptyTable": "No Roles found"
+              },
               drawCallback: function() {
                 $('.dataTables_paginate').addClass('btn btn-sm btn-light');
                 $('.dataTables_paginate > span a').addClass('page-link');
-                $('.dataTables_paginate > span .paginate_button.current').addClass('bg-primary');
+                $('.dataTables_paginate > span .paginate_button.current').addClass('bg-success');
               },
             });
           }, 500);

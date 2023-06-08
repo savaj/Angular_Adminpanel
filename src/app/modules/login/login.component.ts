@@ -3,15 +3,8 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LocalService } from 'src/app/services/local.service';
-import { UserService } from 'src/app/services/user.service';
-
-// Create observer object
-var myObserver = {
-  next: (response: any) => console.log(response),
-  error: (err: Error) => console.error('Error: ' + err),
-  complete: () => console.log('Completed'),
-  submitted: () => true
-};
+import { CommonService } from 'src/app/services/common.service';
+import * as $ from 'jquery'
 
 @Component({
   selector: 'app-login',
@@ -23,7 +16,7 @@ export class LoginComponent implements OnInit {
   num1!: number;
   num2!: number;
   operator!: string;
-  answer!: number;
+  answer!: any;
   captchaValid!: boolean;
 
   loginForm: FormGroup = new FormGroup({
@@ -37,7 +30,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   constructor(private formBuilder: FormBuilder,
-    private userService: UserService,
+    private commonService: CommonService,
     private localStore: LocalService,
     private router: Router,
     private toastr: ToastrService) {
@@ -64,7 +57,6 @@ export class LoginComponent implements OnInit {
     this.num2 = Math.floor(Math.random() * 10) + 1;
     const operators = ['+', '-', '*'];
     this.operator = operators[Math.floor(Math.random() * operators.length)];
-
     switch (this.operator) {
       case '+':
         this.answer = this.num1 + this.num2;
@@ -76,6 +68,19 @@ export class LoginComponent implements OnInit {
         this.answer = this.num1 * this.num2;
         break;
     }
+    $('#captcha').html("");
+
+    
+    // var code;
+    // var canv: any | null = document.createElement("canvas");
+    //  canv.id = "captcha";
+    //  canv.width = 100;
+    //  canv.height = 50;
+    //  var ctx:  any | null = canv.getContext("2d");
+    //  ctx.font = "25px Georgia";
+    //  ctx.strokeText(captcha.join(""), 0, 30);
+    //  code = captcha.join("");
+    //  $("#captcha").append(canv);     
   }
 
   onSubmit(): void {
@@ -94,7 +99,7 @@ export class LoginComponent implements OnInit {
             loginRes.username = `${this.loginForm.value.email}${common_mail_extension}`;
           }
           loginRes.password = this.loginForm.value.password;
-          this.userService.create(`${this.base_url}${this.login_url}`, loginRes).subscribe({
+          this.commonService.createWithoutAuth(`${this.base_url}${this.login_url}`, loginRes).subscribe({
             next: (response: any) => {
               const responseData = response["data"];
               const authRes = responseData.auth;

@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <section id="dom">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <h4 class="card-title">{{BANK_CONSTANT.bankHeading}}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a [routerLink]="['add-edit-bank-guarantee-master']"
+                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{BANK_CONSTANT.bank.addBank}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body collapse show">
+                        <div class="card-block card-dashboard">
+                            <p class="card-text">{{BANK_CONSTANT.bank.banksListing}}</p>
+                            <table class="table table-striped table-bordered table-responsive bankguarantee-datatable" dataTable>
+                                <thead>
+                                    <tr>
+                                        <th>{{BANK_CONSTANT.bank.field.bankname}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.bankbranch}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.bankifsccode}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.bankaddress}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.bankvalidtilldate}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.vendor}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.bg_number}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.file_no}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.tendor}}</th>
+                                        <th>{{BANK_CONSTANT.bank.field.remarks}}</th>
+                                        <!-- <th>{{BANK_CONSTANT.status}}</th> -->
+                                        <th>{{BANK_CONSTANT.action}}</th>
+                                    </tr>
+                                </thead>
+                                 <tbody *ngIf="bankGuaranteeData.length > 0">
+                                    <tr *ngFor="let group of bankGuaranteeData">
+                                        <td>{{group.bank_name}}</td>
+                                        <td>{{group.bank_branch}}</td>
+                                        <td>{{group.bank_ifsc_code}}</td>
+                                        <td>{{group.bank_address}}</td>
+                                        <td>{{group.valid_till_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{group.vendor}}</td>
+                                        <td>{{group.bg_number}}</td>
+                                        <td>{{group.file_no}}</td>
+                                        <td>{{group.tender}}</td>
+                                        <td>{{group.remarks}}</td>
+                                        <!-- <td>
+                                            <label class="switch" (change)="updateStatus(group.id, group.is_active)">
+                                                <input type="checkbox" [checked]="group.is_active === 1 ? true : null">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td> -->
+                                        <td>
+                                            <div class="form-group mt-1 text-center">
+                                                <a routerLink="add-edit-bank-guarantee-master/{{group.id}}"
+                                                class="info p-0 mt-1" data-original-title="" title="">
+                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
+                                                </a>
+                                                <a  class="danger p-0 confirm-text"
+                                                    (click)="deleteBank(group.id, group.is_deleted)">
+                                                    <i class="icon-trash font-medium-3 mr-2"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="bankGuaranteeData.length === 0">
+                                    <td>No Data Found</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

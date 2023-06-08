@@ -21,6 +21,8 @@ export class RightMasterComponent implements OnInit {
   rightsUrl: string = 'rights';
   menuUrl: string = 'resources/menu';
   rolesUrl: string = 'roles';
+  resourceResUrl: string = 'resources';
+  adminMenuWithResourceAllUrl: string = 'menu/adminMenuWithResourceAll';
   selectAllInsert: boolean | undefined = false;
   selectAllEdit: boolean | undefined = false;
   selectAllView: boolean | undefined = false;
@@ -38,6 +40,8 @@ export class RightMasterComponent implements OnInit {
   });
   selectRoleId: any;
   selectMenuId: any;
+  rightsMenuData: any[] = [];
+  roleId: number | undefined;
   constructor(private commonService: CommonService, private toastr: ToastrService,
     private router: Router, private sweetAlert: AlertService,
     private formBuilder: FormBuilder) { }
@@ -48,46 +52,102 @@ export class RightMasterComponent implements OnInit {
         role: [''],
         menu: [''],
       });
+    this.rightsData = [];
     this.rights();
     this.roles();
     this.menus();
   }
 
   rights(roleId?: number, menuId?: number): void {
+    this.roleId = roleId;
+    console.log(this.roleId);
     this.commonService.getByData(this.resourceUrl, { roleId: roleId ?? '', menuId: menuId ?? '' })
       .subscribe({
         next: (response: any) => {
-          this.rightsData = response.data;
-        
-          if(this.rightsData.length > 0){
-            // this.selectRoleId = this.rightsData.role_id;
-            // this.selectMenuId = this.rightsData.menu_id;
-            this.selectAllInsert = this.rightsData?.every(val => val.can_insert === true ? true : false);
-            this.selectAllEdit = this.rightsData?.every(val => val.can_edit === true ? true : false);
-            this.selectAllView = this.rightsData?.every(val => val.can_view === true ? true : false);
-            this.selectAllDelete = this.rightsData?.every(val => val.can_delete === true ? true : false);
+          const rightResultData = response.data;
+            this.commonService.getAll(`${this.resourceResUrl}/${this.adminMenuWithResourceAllUrl}`)
+            .subscribe({
+                next: (response: any) => {
+                  this.rightsMenuData = response.data;
+                  if(rightResultData.length === 0 && roleId){
+                    this.rightsMenuData.forEach(val => {
+                      val.can_insert = false;
+                      val.can_edit = false;
+                      val.can_view = false;
+                      val.can_delete = false;
+                      val.role_id = this.roleId;
+                    })
+                    this.rightsData = this.rightsMenuData;
+                  }
+                  if(rightResultData.length > 0 && rightResultData.filter((e:any) => e.role_id === this.roleId) && roleId){
+                    this.rightsData = rightResultData;
+                  }
+                  if(roleId){
+                     this.selectAllInsert = this.rightsData?.every((val:any) => val.can_insert === true ? true : false);
+                    this.selectAllEdit = this.rightsData?.every((val:any) => val.can_edit === true ? true : false);
+                    this.selectAllView = this.rightsData?.every((val:any) => val.can_view === true ? true : false);
+                    this.selectAllDelete = this.rightsData?.every((val:any) => val.can_delete === true ? true : false);
+                  }
+                 
+                },error: (err: any) => {
+                  this.toastr.error(err.error.message);
+                } 
+            });
+            
+            var table: any;
+            if ( $.fn.dataTable.isDataTable( '.rights-datatable' ) ) {
+              table = $('.rights-datatable').DataTable();
           }
+          else {
+              table = $('.rights-datatable').DataTable( {
+                processing: true,
+                paging: false,
+                searching: false,
+                responsive: true,
+                ordering: false
+              } );
+          }
+          
+          
+          
+              
+              // console.log(this.rightsData);
+                // if(this.rightsData.length > 0){
+                //   this.selectAllInsert = this.rightsData?.every(val => val.can_insert === (null || false) ? false : true);
+                //   this.selectAllEdit = this.rightsData?.every(val => val.can_edit === (null || false) ? false : true);
+                //   this.selectAllView = this.rightsData?.every(val => val.can_view === (null || false) ? false : true);
+                //   this.selectAllDelete = this.rightsData?.every(val => val.can_delete === (null || false) ? false : true);
+                // }
+              
+            // if(this.rightsMenuData.length === this.rightsData.length){
+            //   if(this.rightsData.length > 0){
+            //     // this.selectRoleId = this.rightsData.role_id;
+            //     // this.selectMenuId = this.rightsData.menu_id;
+            //     this.selectAllInsert = this.rightsData?.every(val => val.can_insert === true ? true : false);
+            //     this.selectAllEdit = this.rightsData?.every(val => val.can_edit === true ? true : false);
+            //     this.selectAllView = this.rightsData?.every(val => val.can_view === true ? true : false);
+            //     this.selectAllDelete = this.rightsData?.every(val => val.can_delete === true ? true : false);
+            //   }
+            // } else {
+            //     this.rightsData = this.rightsMenuData;
+            //     console.log(this.rightsData);
+            //     this.selectAllInsert = this.rightsData?.every(val => val.can_insert === (null || false) ? false : true);
+            //     this.selectAllEdit = this.rightsData?.every(val => val.can_edit === (null || false) ? false : true);
+            //     this.selectAllView = this.rightsData?.every(val => val.can_view === (null || false) ? false : true);
+            //     this.selectAllDelete = this.rightsData?.every(val => val.can_delete === (null || false) ? false : true);
+            // }
+          
           //setTimeout(() => {
-                var table;
-                if ( $.fn.dataTable.isDataTable( '.rights-datatable' ) ) {
-                  table = $('.rights-datatable').DataTable();
-              }
-              else {
-                  table = $('.rights-datatable').DataTable( {
-                    processing: true,
-                    paging: false,
-                    searching: false,
-                    responsive: true,
-                    ordering: false
-                  } );
-              }
-          //}, 500);
+               
+         // }, 500);
         },
         error: (err: any) => {
           this.toastr.error(err.error.message);
         }
       });
   }
+
+
 
   menus(): void {
     const listUrl = "/list";
@@ -126,6 +186,10 @@ export class RightMasterComponent implements OnInit {
 
   saveMenu(): void {
     try {
+      this.rightsData.map((rightres) => {
+        rightres.role_id = this.roleId;
+        return rightres;
+      });
       this.commonService.bulkupdate(`${this.rightsUrl}`, {"data": this.rightsData}).pipe(first()).subscribe({
         next: (response: any) => {
           this.toastr.success(response.message);

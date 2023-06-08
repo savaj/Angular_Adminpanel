@@ -55,8 +55,9 @@
                 }
                 // If menu accordion then close all except clicked once
                 else {
-                    openListItems = listItem.siblings('.open');
-                    collapse(openListItems);
+                    console.log(listItem);
+                    // openListItems = listItem.siblings('.open');
+                    // collapse(openListItems);
                     listItem.siblings('.open').find('li.open').removeClass('open');
                 }
             }

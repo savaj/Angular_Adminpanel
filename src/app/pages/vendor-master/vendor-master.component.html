@@ -1,0 +1,68 @@
+<div class="container-fluid">
+    <section id="dom">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <h4 class="card-title">{{VENDOR_CONSTANT.vendorsHeading}}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a [routerLink]="['add-edit-vendor']"
+                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{VENDOR_CONSTANT.vendor.addVendor}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body collapse show">
+                        <div class="card-block card-dashboard">
+                            <p class="card-text">{{VENDOR_CONSTANT.vendor.vendorsListing}}</p>
+                            <table class="table table-striped table-bordered vendors-datatable" #dataTable>
+                                <thead>
+                                    <tr>
+                                        <th>{{VENDOR_CONSTANT.vendor.field.vendorname}}</th>
+                                        <th>{{VENDOR_CONSTANT.vendor.field.vendorAddress}}</th>
+                                        <th>{{VENDOR_CONSTANT.vendor.field.contact_person_name}}</th>
+                                        <th>{{VENDOR_CONSTANT.vendor.field.contact_person_email}}</th>
+                                        <th>{{VENDOR_CONSTANT.vendor.field.contact_person_mobile_no}}</th>
+                                        <th>{{VENDOR_CONSTANT.status}}</th>
+                                        <th>{{VENDOR_CONSTANT.action}}</th>
+                                    </tr>
+                                </thead> 
+                                 <tbody>
+                                    <tr *ngFor="let group of vendorsData">
+                                        <td>{{group.vendor_name}}</td>
+                                        <td>{{group.vendor_address}}</td>
+                                        <td>{{group.contact_person_name}}</td>
+                                        <td>{{group.contact_person_email}}</td>
+                                        <td>{{group.contact_person_mobile_no}}</td>
+                                        <td>
+                                            <label class="switch" (change)="updateStatus(group.id, group.is_active)">
+                                                <input type="checkbox" [checked]="group.is_active === 1 ? true : null">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="form-group mt-1 text-center">
+                                                <a routerLink="add-edit-vendor/{{group.id}}"
+                                                class="info p-0 mt-1" data-original-title="" title="">
+                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
+                                                </a>
+                                                <a  class="danger p-0 confirm-text"
+                                                    (click)="deleteVendor(group.id, group.is_deleted)">
+                                                    <i class="icon-trash font-medium-3 mr-2"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

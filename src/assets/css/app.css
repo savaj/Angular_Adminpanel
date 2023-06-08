@@ -3222,8 +3222,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #FFFFFF;
-  background-color: #666EE8;
-  border-color: #666EE8;
+  background-color: #76bfc1;
+  border-color: #76bfc1;
 }
 
 .btn-primary:hover {
@@ -4811,7 +4811,7 @@ input[type='button'].btn-block {
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-  background-color: #666EE8;
+  background-color: #28D094;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
@@ -4819,7 +4819,7 @@ input[type='button'].btn-block {
 }
 
 .custom-checkbox .custom-control-input:indeterminate~.custom-control-label::before {
-  background-color: #666EE8;
+  background-color: #28D094;
 }
 
 .custom-checkbox .custom-control-input:indeterminate~.custom-control-label::after {
@@ -4839,7 +4839,7 @@ input[type='button'].btn-block {
 }
 
 .custom-radio .custom-control-input:checked~.custom-control-label::before {
-  background-color: #666EE8;
+  background-color: #28D094;
 }
 
 .custom-radio .custom-control-input:checked~.custom-control-label::after {
@@ -45747,7 +45747,6 @@ form .form-section i {
 }
 
 form .form-actions {
-  border-top: 1px solid #D1D5EA;
   padding: 20px 0;
   margin-top: 20px;
 }
@@ -53165,7 +53164,7 @@ datetime .form-group {
 .app-sidebar .navigation li ul li a,
 .off-canvas-sidebar .navigation li ul li a {
   display: block;
-  padding: 5px 18px 5px 55px;
+  padding: 5px 18px 5px 35px;
   margin: 8px 13px;
 }
 
