@@ -1,13 +1,15 @@
 export class GlobalConstants {
     public static apiURL: string = "/api/";
     public static authText: string = "Authorization";
-    public static authorizationUserText: string = "auth.user";
-    public static authorizationPassText: string = "auth.pass";
+    public static authorizationText: string = "auth";
+    public static authorizationUserText: string = "user";
+    public static authorizationPassText: string = "pass";
     public static bearerText: string = 'Bearer ';
     public static token: string = 'token';
     public static deleteConfirmMessage: string = "Are you sure to delete?";
     public static yes: string = "Yes";
     public static no: string = "No";
+    public static cancel: string = "Cancel";
 
     public static back: string = "Back";
     public static save: string = "Save";
@@ -22,9 +24,15 @@ export class GlobalConstants {
     public static rightmasterHeading:string = "Rights";
     public static menuHeading: string = "Menus";
     public static bankHeading: string = "Bank Guarantees";
+    public static bgReturnHeading: string = "Bg Return";
     public static vendorsHeading: string = "Vendors";
     public static tendorsHeading: string = "Tenders";
-
+    public static approveRejectHeading: string = "Bg Approve/Reject Request";
+    public static approveRejectHistoryHeading: string = "Bg Approver";
+    public static amount_minlength = "Please enter minimum 5 digit";
+    public static amount_maxlength = "Please enter maximum 10 digit";
+    public static onlyNumber = "Please enter only Number";
+    public static onlyAlphabets = "Please enter only alphabets";
     public static user = {
         addUser: 'Add User',
         editUser: 'Edit User',
@@ -170,11 +178,13 @@ export class GlobalConstants {
         },
         maxLength: {
             bankCheckNumber_maxLen: 'Bank Check Number max length 5 digit',
-            bankDDNumber_maxLen: 'Bank DD Number max length 5 digit',
-            bankNEFTNumber_maxLen: 'Bank Transaction Number max length 5 digit'
+            bankDDNumber_maxLen: 'Bank DD Number max length 6 digit',
+            bankNEFTNumber_maxLen: 'Bank Transaction Number max length 23 digit'
         },
-        amount_minlength: "Please enter minimum 5 digit",
-        amount_maxlength: "Please enter maximum 10 digit",
+        checkpattern: 'please enter valid check Number',
+        ddpattern: 'please enter valid dd Number',
+        neftpattern: 'please enter valid neft Number'
+     
     }
 
     public static flow = {
@@ -201,7 +211,7 @@ export class GlobalConstants {
             contact_person_name: 'Contact Person Name is required',
             contact_person_email: 'Contact Person Email is required',
             contact_person_mobile_no: 'Contact Person Mobile No is required'
-        }  
+        },
     }
 
     public static tendor = {
@@ -225,5 +235,44 @@ export class GlobalConstants {
             work_order_no: 'Work Order No is required',
             work_order_document: 'Please select Work Order Document'
         }  
+    }
+
+    public static approveReject = {
+        approveRejectListing: 'Bg Approve/Reject Request Listing',
+        field: {
+            bg_number: 'BG Number',
+            bank_detail_owner_id: 'Bank Detail Owner Id',
+            designation: 'Designation',
+            bg_type: 'Bg Type',
+            bg_type_number: 'Bg Type Number',
+            valid_till_date: 'Valid Till Date',
+            remarks: 'Remarks'
+        },
+    }
+
+    public static approver = {
+        approverListing: 'Bg Approver Listing',
+        field: {
+            bg_number: 'BG Number',
+            bg_type: 'Bg Type',
+            bg_type_number: 'Bg Type Number',
+            valid_till_date: 'Valid Till Date',
+            bank_detail_approval_status: 'BG Status'
+        },
+    }
+
+    public static bgReturn = {
+        addBgReturn: 'Add Bg Return',
+        editBgReturn: 'Edit Bg Return',
+        bgReturnsListing: 'Bg Return Listing',
+        bgReturnsSafeMessage: 'Bg Return is Safe',
+        field: {
+            bg_type: 'BG Type',
+            return_date: 'Return Date',
+            contact_person_name: 'Contact Person Name',
+            contact_person_email: 'Contact Person Email',
+            utr_number: 'UTR Number',
+        },
+     
     }
 }

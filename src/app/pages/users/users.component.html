@@ -11,7 +11,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <a [routerLink]="['add-edit-user']"
-                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{USER_CONSTANT.user.addUser}}</a>
+                                        class="btn mr-1 shadow-z-2 btn-success float-right"
+                                        *ngIf="result_data.can_insert">{{USER_CONSTANT.user.addUser}}</a>
                                 </div>
                             </div>
                         </div>
@@ -28,8 +29,8 @@
                                         <th>{{USER_CONSTANT.user.field.department}}</th>
                                         <th>{{USER_CONSTANT.user.field.hod}}</th>
                                         <th>{{USER_CONSTANT.user.field.branch}}</th>
-                                        <th>{{USER_CONSTANT.status}}</th>
-                                        <th>{{USER_CONSTANT.action}}</th>
+                                        <th *ngIf="result_data.can_edit">{{USER_CONSTANT.status}}</th>
+                                        <th *ngIf="result_data.can_edit || result_data.can_delete">{{USER_CONSTANT.action}}</th>
                                     </tr>
                                 </thead> 
                                  <tbody>
@@ -40,21 +41,21 @@
                                         <td>{{group.department}}</td>
                                         <td>{{group.hod}}</td>
                                         <td>{{group.branch}}</td>
-                                        <td>
+                                        <td *ngIf="result_data.can_edit">
                                             <label class="switch" (change)="updateStatus(group.id, group.is_active)">
                                                 <input type="checkbox" [checked]="group.is_active === 1 ? true : null">
                                                 <span class="slider round"></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td *ngIf="result_data.can_edit || result_data.can_delete">
                                             <div class="form-group mt-1 text-center">
                                                 <a routerLink="add-edit-user/{{group.id}}"
                                                 class="info p-0 mt-1" data-original-title="" title="">
-                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
+                                                    <i class="icon-pencil font-medium-3 mr-2" title="edit" *ngIf="result_data.can_edit"></i>
                                                 </a>
                                                 <a  class="danger p-0 confirm-text"
                                                     (click)="deleteUser(group.id, group.is_deleted)">
-                                                    <i class="icon-trash font-medium-3 mr-2"></i>
+                                                    <i class="icon-trash font-medium-3 mr-2" title="delete" *ngIf="result_data.can_delete"></i>
                                                 </a>
                                             </div>
                                         </td>

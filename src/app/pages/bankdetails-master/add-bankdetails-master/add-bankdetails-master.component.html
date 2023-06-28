@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <section id="basic-form-layouts">
-        <div class="row match-height">
+        <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -21,6 +21,10 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <ngx-spinner bdColor="grey" size="small" color="#fff" type="ball-scale-multiple"
+                            *ngIf="isLoading" [fullScreen]="true"
+                            template="<img src='../../../assets/img/Loading_2.gif' />">
+                        </ngx-spinner>
                         <div class="px-3">
                             <form class="form" [formGroup]="addEditBankGuaranteeForm" enctype="multipart/form-data"
                                 (ngSubmit)="onSubmit()">
@@ -100,69 +104,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label
-                                                            for="projectinput8">{{BANK_CONSTANT.bank.field.file_no}}<span
-                                                                class="required">*</span></label>
 
-                                                        <input type="text" formControlName="file_no" id="projectinput8"
-                                                            class="form-control" placeholder="File Number"
-                                                            [ngClass]="{ 'is-invalid': submitted && f['file_no'].errors }"
-                                                            [readonly]="!isAddMode">
-
-                                                        <div *ngIf="submitted && f['file_no'].errors"
-                                                            class="invalid-feedback">
-                                                            <div *ngIf="f['file_no'].errors['required']">
-                                                                {{BANK_CONSTANT.bank.required.file_no}}</div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <!-- <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label
-                                                            for="projectinput6">{{BANK_CONSTANT.bank.field.companyname}}<span
-                                                                class="required">*</span></label>
-
-                                                        <input type="text" formControlName="company_name"
-                                                            id="projectinput6" class="form-control"
-                                                            placeholder="Company Name"
-                                                            [ngClass]="{ 'is-invalid': submitted && f['company_name'].errors }"
-                                                            [readonly]="!isAddMode">
-
-                                                        <div *ngIf="submitted && f['company_name'].errors"
-                                                            class="invalid-feedback">
-                                                            <div *ngIf="f['company_name'].errors['required']">
-                                                                {{BANK_CONSTANT.bank.required.companyname}}</div>
-                                                        </div>
-
-                                                    </div>
-                                                </div> -->
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label
-                                                            for="projectinput6">{{BANK_CONSTANT.bank.field.vendor}}<span
-                                                                class="required">*</span></label>
-
-                                                        <select id="projectinput6" formControlName="vendor"
-                                                            class="form-control"
-                                                            [ngClass]="{ 'is-invalid': submitted && f['vendor'].errors }">
-                                                            <option value="" disabled="">Vendor</option>
-                                                            <option *ngFor="let option of vendorData"
-                                                                [value]="option.id">
-                                                                {{ option.name }}</option>
-                                                        </select>
-
-                                                        <div *ngIf="submitted && f['vendor'].errors"
-                                                            class="invalid-feedback">
-                                                            <div *ngIf="f['vendor'].errors['required']">
-                                                                {{BANK_CONSTANT.bank.required.vendor}}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label
@@ -171,7 +113,8 @@
 
                                                         <select id="projectinput9" formControlName="tender"
                                                             class="form-control"
-                                                            [ngClass]="{ 'is-invalid': submitted && f['tender'].errors }">
+                                                            [ngClass]="{ 'is-invalid': submitted && f['tender'].errors }"
+                                                            (change)="ontenderChange($event)">
                                                             <option value="" disabled="">
                                                                 {{BANK_CONSTANT.bank.field.tendor}}</option>
                                                             <option *ngFor="let option of tendorData"
@@ -184,6 +127,45 @@
                                                             <div *ngIf="f['tender'].errors['required']">
                                                                 {{BANK_CONSTANT.bank.required.tendor}}</div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput6">{{BANK_CONSTANT.bank.field.vendor}}<span
+                                                                class="required">*</span></label>
+                                                        <input type="text" formControlName="vendor" id="projectinput6"
+                                                            class="form-control" placeholder="Vendor" [readonly]=true
+                                                            [ngClass]="{ 'is-invalid': submitted && f['vendor'].errors }"
+                                                            [readonly]=true>
+
+                                                        <div *ngIf="submitted && f['vendor'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['vendor'].errors['required']">
+                                                                {{BANK_CONSTANT.bank.required.vendor}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput8">{{BANK_CONSTANT.bank.field.file_no}}<span
+                                                                class="required">*</span></label>
+
+                                                        <input type="text" formControlName="file_no" id="projectinput8"
+                                                            class="form-control" placeholder="File Number"
+                                                            [readonly]=true
+                                                            [ngClass]="{ 'is-invalid': submitted && f['file_no'].errors }"
+                                                            [readonly]=true>
+
+                                                        <div *ngIf="submitted && f['file_no'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['file_no'].errors['required']">
+                                                                {{BANK_CONSTANT.bank.required.file_no}}</div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -212,6 +194,7 @@
                                                             <span class="required">*</span></label>
                                                         <input type="text" formControlName="amount" id="projectinput14"
                                                             class="form-control" placeholder="Amount"
+                                                            [readonly]="!isAddMode"
                                                             [ngClass]="{ 'is-invalid': submitted && f['amount'].errors }">
 
 
@@ -224,16 +207,21 @@
                                                             *ngIf="f['amount'].errors && f['amount'].dirty && f['amount'].touched">
                                                             <ul role="alert">
                                                                 <li *ngIf="f['amount'].errors['minlength']">
-                                                                    {{BANK_CONSTANT.bank.amount_minlength}}</li>
+                                                                    {{BANK_CONSTANT.amount_minlength}}</li>
                                                                 <li *ngIf="f['amount'].errors['maxlength']">
-                                                                    {{BANK_CONSTANT.bank.amount_maxlength}}</li>
+                                                                    {{BANK_CONSTANT.amount_maxlength}}</li>
+                                                                <li *ngIf="f['amount'].errors['pattern']">
+                                                                    {{BANK_CONSTANT.onlyNumber}}</li>
+
                                                             </ul>
                                                         </div>
                                                     </div>
                                                     <button type="button" class="btn float-right btn-success add"
-                                                        (click)="addField()" *ngIf="!isAddMode">
+                                                        (click)="addField()"
+                                                        *ngIf="!isAddMode && status !== 'pending' && is_lock === 0 && currentDate > res_valid_till_date">
                                                         <div class="fonticon-wrap">
-                                                            <i class="icon-plus"></i>Add More BG
+                                                            <i class="icon-plus"></i><span class="add-more"> Add More
+                                                                BG</span>
                                                         </div>
                                                     </button>
                                                 </div>
@@ -258,16 +246,15 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
+                                                                <div class="form-group"
+                                                                    [class.disabled]="isDisabled[i]">
                                                                     <h6 for="projectinput11">
                                                                         {{BANK_CONSTANT.bank.field.bg_doc}}</h6>
-                                                                        <div class="controls">
-                                                                            <input type="file"
-                                                                                class="form-control"
-                                                                                id="projectinput11"
-                                                                                formControlName="bg_doc"
-                                                                                (change)="onFileChange($event)">
-                                                                        </div>
+                                                                    <div class="controls">
+                                                                        <input type="file" class="form-control"
+                                                                            id="projectinput11" formControlName="bg_doc"
+                                                                            (change)="onFileChange($event)">
+                                                                    </div>
                                                                     <div *ngIf="submitted && selectedFile === null && !id"
                                                                         class="error-message">
                                                                         <div>{{BANK_CONSTANT.bank.required.bg_doc}}
@@ -298,7 +285,7 @@
                                                                             class="required">*</span></label>
                                                                     <select id="projectinput16_{{i}}"
                                                                         formControlName="bg_type" class="form-control"
-                                                                        (change)="onDropdownChange($event)">
+                                                                        (change)="onDropdownChange($event, i)">
                                                                         <option value="" disabled="">Bg Type</option>
                                                                         <option *ngFor="let option of bgType"
                                                                             [value]="option.name">
@@ -312,34 +299,33 @@
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-md-6" *ngIf="showTextbox">
+                                                            <div class="col-md-6" *ngIf="showTextbox[i]">
                                                                 <div class="form-group">
                                                                     <label for="projectinput20_{{i}}"
                                                                         *ngIf="bg_value === 'Check' && showTextbox && isAddMode">{{BANK_CONSTANT.bank.field.bankCheckNumber}}<span
                                                                             class="required">*</span></label>
                                                                     <label for="projectinput20_{{i}}"
-                                                                            *ngIf="showTextbox && !isAddMode && this.fieldArray.controls[i].get('bg_type')?.value === 'Check'">{{BANK_CONSTANT.bank.field.bankCheckNumber}}<span
-                                                                                class="required">*</span></label>
-                                                                    
+                                                                        *ngIf="showTextbox && !isAddMode && fieldArray.controls[i].get('bg_type')?.value === 'Check'">{{BANK_CONSTANT.bank.field.bankCheckNumber}}<span
+                                                                            class="required">*</span></label>
+
                                                                     <label for="projectinput20_{{i}}"
                                                                         *ngIf="bg_value === 'DD' && showTextbox && isAddMode">{{BANK_CONSTANT.bank.field.bankDDNumber}}<span
                                                                             class="required">*</span></label>
 
                                                                     <label for="projectinput20_{{i}}"
-                                                                        *ngIf="showTextbox && !isAddMode  && this.fieldArray.controls[i].get('bg_type')?.value === 'DD'">{{BANK_CONSTANT.bank.field.bankDDNumber}}<span
+                                                                        *ngIf="showTextbox && !isAddMode  && fieldArray.controls[i].get('bg_type')?.value === 'DD'">{{BANK_CONSTANT.bank.field.bankDDNumber}}<span
                                                                             class="required">*</span></label>
 
                                                                     <label for="projectinput20_{{i}}"
-                                                                            *ngIf="bg_value === 'NEFT' && showTextbox && isAddMode">{{BANK_CONSTANT.bank.field.bankNeftNumber}}<span
-                                                                                class="required">*</span></label>
+                                                                        *ngIf="bg_value === 'NEFT' && showTextbox && isAddMode">{{BANK_CONSTANT.bank.field.bankNeftNumber}}<span
+                                                                            class="required">*</span></label>
 
                                                                     <label for="projectinput20_{{i}}"
-                                                                        *ngIf="showTextbox && !isAddMode && this.fieldArray.controls[i].get('bg_type')?.value === 'NEFT'">{{BANK_CONSTANT.bank.field.bankNeftNumber}}<span
+                                                                        *ngIf="showTextbox && !isAddMode && fieldArray.controls[i].get('bg_type')?.value === 'NEFT'">{{BANK_CONSTANT.bank.field.bankNeftNumber}}<span
                                                                             class="required">*</span></label>
 
                                                                     <input type="text" id="projectinput20_{{i}}"
-                                                                        class="form-control"
-                                                                        *ngIf="isAddMode"
+                                                                        class="form-control" *ngIf="isAddMode"
                                                                         formControlName="bg_type_number">
                                                                     <input type="text" id="projectinput20_{{i}}"
                                                                         *ngIf="showTextbox && !isAddMode"
@@ -360,6 +346,8 @@
                                                                                 </li>
                                                                                 <li
                                                                                     *ngIf="bg_value === 'NEFT' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('required')">
+                                                                                    {{BANK_CONSTANT.bank.required.bankNeftNumber}}
+
                                                                                 </li>
                                                                             </ul>
                                                                             <ul>
@@ -368,29 +356,28 @@
                                                                                     {{BANK_CONSTANT.bank.maxLength.bankCheckNumber_maxLen}}
                                                                                 </li>
                                                                                 <li
+                                                                                    *ngIf="bg_value === 'Check' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('pattern')">
+                                                                                    {{BANK_CONSTANT.bank.checkpattern}}
+                                                                                </li>
+                                                                                <li
                                                                                     *ngIf="bg_value === 'DD' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('maxlength')">
                                                                                     {{BANK_CONSTANT.bank.maxLength.bankDDNumber_maxLen}}
+                                                                                </li>
+                                                                                <li
+                                                                                    *ngIf="bg_value === 'DD' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('pattern')">
+                                                                                    {{BANK_CONSTANT.bank.ddpattern}}
                                                                                 </li>
                                                                                 <li
                                                                                     *ngIf="bg_value === 'NEFT' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('maxlength')">
                                                                                     {{BANK_CONSTANT.bank.maxLength.bankNEFTNumber_maxLen}}
                                                                                 </li>
+                                                                                <li
+                                                                                    *ngIf="bg_value === 'NEFT' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('pattern')">
+                                                                                    {{BANK_CONSTANT.bank.neftpattern}}
+                                                                                </li>
                                                                             </ul>
                                                                         </div>
                                                                     </div>
-                                                                    <!-- <div class="help-block">
-                                                                            <ul>
-                                                                                <li *ngIf="bg_value === 'Check' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('maxLength')">
-                                                                                    {{BANK_CONSTANT.bank.maxLength.bankCheckNumber_maxLen}}
-                                                                                </li>
-                                                                                <li *ngIf="bg_value === 'DD' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('maxLength')">
-                                                                                    {{BANK_CONSTANT.bank.maxLength.bankDDNumber_maxLen}}
-                                                                                </li>
-                                                                                <li *ngIf="bg_value === 'NEFT' && showTextbox && fieldArray.controls[i].get('bg_type_number')?.hasError('maxLength')">
-                                                                                    {{BANK_CONSTANT.bank.maxLength.bankNEFTNumber_maxLen}}
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div> -->
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
@@ -409,25 +396,29 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" class="btn btn-danger float-right"
-                                                            (click)="removeField(i)" *ngIf="!isAddMode && i > 0">
-                                                            <div class="fonticon-wrap">
-                                                                <i class="icon-trash"></i>
-                                                            </div>
-                                                        </button>
+                                                        <div class="row">
+                                                            <button type="button" class="btn btn-danger"
+                                                                (click)="removeField(i)" *ngIf="!isAddMode && i > 0">
+                                                                <div class="fonticon-wrap">
+                                                                    <i class="icon-trash"></i>
+                                                                </div>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-actions center">
-                                            <button type="submit" class="btn btn-success" *ngIf="!isAddMode">
+                                            <button type="submit" class="btn btn-success"
+                                                *ngIf="!isAddMode && is_lock === 0">
                                                 <i class="icon-note"></i> {{BANK_CONSTANT.save}}
                                             </button>
                                             <button type="submit" class="btn btn-success" *ngIf="isAddMode">
                                                 <i class="icon-note"></i> {{BANK_CONSTANT.save}}
                                             </button>
                                             <button type="button" (click)="onReset()" class="btn btn-danger ml-1">
-                                                <i class="icon-trash"></i> {{BANK_CONSTANT.reset}}
+                                                <i class="icon-close" style="position: relative; top: 2px;"></i>
+                                                {{BANK_CONSTANT.cancel}}
                                             </button>
                                         </div>
                                     </div>

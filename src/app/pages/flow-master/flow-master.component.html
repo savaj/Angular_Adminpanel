@@ -10,7 +10,8 @@
                                     <h4 class="card-title">Flow Master</h4>
                                 </div>
                                 <div class="col-md-6">
-                                    <a [routerLink]="['add-flow-master']" class="btn mr-1 shadow-z-2 btn-success float-right">Add
+                                    <a [routerLink]="['add-flow-master']" class="btn mr-1 shadow-z-2 btn-success float-right"
+                                    *ngIf="result_data && result_data.can_insert">Add
                                         Flow Master</a>
                                 </div>
                             </div>
@@ -27,7 +28,7 @@
                                         <th>Designation</th>
                                         <th>Send From</th>
                                         <th>Send To</th>
-                                        <th>Action</th>
+                                        <th *ngIf="result_data && (result_data.can_edit || result_data.can_delete)">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="flowMasterData.length > 0">
@@ -35,15 +36,15 @@
                                         <td>{{group.designation_name}}</td>
                                         <td>{{group.send_from}}</td>
                                         <td>{{group.send_to}}</td>
-                                        <td>
+                                        <td *ngIf="result_data && (result_data.can_edit || result_data.can_delete)">
                                             <div class="form-group mt-1 text-center">
                                                 <a routerLink="add-flow-master/{{group.designation_id}}"
                                                 class="info p-0 mt-1" data-original-title="" title="">
-                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
+                                                    <i class="icon-pencil font-medium-3 mr-2" title="edit" *ngIf="result_data && result_data.can_edit"></i>
                                                 </a>
                                                 <a  class="danger p-0 confirm-text"
                                                     (click)="deleteFlow(group.designation_id, group.is_deleted)">
-                                                    <i class="icon-trash font-medium-3 mr-2"></i>
+                                                    <i class="icon-trash font-medium-3 mr-2" title="delete" *ngIf="result_data && result_data.can_delete"></i>
                                                 </a>
                                             </div>
                                         </td>

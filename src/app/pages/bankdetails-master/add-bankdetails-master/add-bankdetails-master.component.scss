@@ -14,3 +14,17 @@ form h6{
     font-weight: 500;
     font-family: inherit;
 }
+
+.add-more{
+    position: relative;
+    bottom: 2px;
+}
+
+div.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+div.disabled input[type="file"] {
+    cursor: not-allowed;
+}

@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <section id="dom">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                            <div class="row pt-3">
+                                <div class="col-md-12">
+                                    <h4 class="card-title">{{APPROVER_CONSTANT.approveRejectHistoryHeading}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-block card-dashboard">
+                            <p class="card-text">{{APPROVER_CONSTANT.approver.approverListing}}</p>
+                            <table class="table table-striped table-bordered bg-appRej-datatable">
+                                <thead>
+                                    <tr>
+                                        <th>{{APPROVER_CONSTANT.approver.field.bg_number}}</th>
+                                        <th>{{APPROVER_CONSTANT.approver.field.bg_type}}</th>
+                                        <th>{{APPROVER_CONSTANT.approver.field.bg_type_number}}</th>
+										<th>{{APPROVER_CONSTANT.approver.field.valid_till_date}}</th>
+                                        <th>{{APPROVER_CONSTANT.approver.field.bank_detail_approval_status}}</th>
+                                    </tr>
+                                </thead>
+                                 <tbody *ngIf="bgApproveRejectHistoryData.length > 0">
+                                    <tr *ngFor="let group of bgApproveRejectHistoryData; let i = index">
+                                        <td>{{group.bg_number}}</td>
+										<td>{{group.bg_type }}</td>
+                                        <td>{{group.bg_type_number }}</td>
+                                        <td>{{group.valid_till_date| date}}</td>
+                                        <td>{{group.bank_detail_approval_status }}</td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="bgApproveRejectHistoryData.length === 0">
+                                    <td>No Data Found</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

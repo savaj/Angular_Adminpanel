@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { TenderMasterRoutingModule } from './tender-master-routing.module';
 import { TenderMasterComponent } from './tender-master.component';
 import { AddEditTenderMasterComponent } from './add-edit-tender-master/add-edit-tender-master.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -15,10 +16,14 @@ import { SharedModule } from 'src/app/modules/shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
-    TenderMasterRoutingModule
+    TenderMasterRoutingModule,
+    NgxSpinnerModule,
   ],
   exports: [
     SharedModule
-  ]
+  ],
+  providers: [DatePipe],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
 })
 export class TenderMasterModule { }

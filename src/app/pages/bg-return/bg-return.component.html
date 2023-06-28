@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <section id="dom">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <h4 class="card-title">{{BG_CONSTANT.bgReturnHeading}}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a [routerLink]="['add-edit-bg-return']"
+                                        class="btn mr-1 shadow-z-2 btn-success float-right" *ngIf="result_data.can_insert">{{BG_CONSTANT.bgReturn.addBgReturn}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body collapse show">
+                        <div class="card-block card-dashboard">
+                            <p class="card-text">{{BG_CONSTANT.bgReturn.bgReturnsListing}}</p>
+                            <ngx-spinner
+                            bdColor="grey"
+                            size="small"
+                            color="#fff"
+                            type="ball-scale-multiple"
+                            *ngIf="isLoading"
+                            [fullScreen]="true"
+                            template="<img src='../../../assets/img/Loading_2.gif' />">
+                            </ngx-spinner>
+                            <table class="table table-responsive-md text-center table-striped table-bordered bg-return-datatable" dataTable>
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{BG_CONSTANT.bgReturn.field.bg_type}}</th>
+                                        <th class="text-center">{{BG_CONSTANT.bgReturn.field.return_date}}</th>
+                                        <th class="text-center">{{BG_CONSTANT.bgReturn.field.contact_person_name}}</th>
+                                        <th class="text-center">{{BG_CONSTANT.bgReturn.field.contact_person_email}}</th>
+                                        <th class="text-center">{{BG_CONSTANT.bgReturn.field.utr_number}}</th>
+                                        <th class="text-center">{{BG_CONSTANT.status}}</th>
+                                        <th class="text-center" *ngIf="result_data.can_edit || result_data.can_delete || result_data.can_view">{{BG_CONSTANT.action}}</th>
+                                    </tr>
+                                </thead>
+                                 <tbody *ngIf="bgReturnData.length > 0">
+                                    <tr *ngFor="let group of bgReturnData">
+                                        <td>{{group.bg_type || '-' }}</td>
+                                        <td>{{group.return_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{group.contact_person_name ||  '-'  }}</td>
+                                        <td>{{group.contact_person_email || '-' }}</td>
+                                        <td>{{group.utr_number}}</td>
+                                        <td>
+                                            <label class="switch" (change)="updateStatus(group.id, group.is_active)">
+                                                <input type="checkbox" [checked]="group.is_active === 1 ? true : null">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                        <td *ngIf="result_data.can_edit || result_data.can_delete || result_data.can_view" class="d-flex">
+                                                <a routerLink="add-edit-bg-return/{{group.id}}"
+                                                class="info p-0 mt-1" data-original-title="" title="">
+                                                    <i class="icon-pencil font-medium-3 mr-2" title="Edit" *ngIf="result_data.can_edit"></i>
+                                                </a>
+                                                <a  class="danger p-0 mt-1 confirm-text"
+                                                (click)="deleteBgReturn(group.id, group.is_deleted)">
+                                                    <i class="icon-trash font-medium-3 mr-2" title="Delete" *ngIf="result_data.can_delete"></i>
+                                                </a>
+                                                <a class="primary p-0 mt-1">
+                                                <i class="fa fa-file-pdf-o font-medium-3 mr-2" title="Bg document" *ngIf="result_data.can_view"></i>
+                                                </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

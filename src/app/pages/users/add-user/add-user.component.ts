@@ -15,7 +15,7 @@ import { GlobalConstants } from '../../../common/global-constants';
 export class AddUserComponent implements OnInit {
 
   readonly MY_CONSTANT = GlobalConstants;
-  
+
   base_url = 'users';
   role_url: string = 'roles';
   roleData?: any[];
@@ -35,6 +35,8 @@ export class AddUserComponent implements OnInit {
       name: 'HR/Admin'
     }
   ]
+
+  //User Form Group
   addEditUserForm: FormGroup = new FormGroup({
     firstname: new FormControl(''),
     middlename: new FormControl(''),
@@ -46,6 +48,8 @@ export class AddUserComponent implements OnInit {
     branch: new FormControl(''),
   });
   submitted = false;
+
+  //User submitted Data Object
   formData: any = {
     firstname: '',
     middlename: '',
@@ -56,12 +60,15 @@ export class AddUserComponent implements OnInit {
     hod: '',
     branch: ''
   }
+
+  //Dependency Injection
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private userService: CommonService,
     private router: Router) { }
-   
+
+  //User Initialization
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
@@ -70,7 +77,7 @@ export class AddUserComponent implements OnInit {
       {
         firstname: ['', Validators.required],
         middlename: ['', Validators.required],
-        email: ['', { validators: [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")], updateOn: "blur" }],
+        email: ['', { validators: [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,4}$")], updateOn: "blur" }],
         mobile_number: ['', { validators: [Validators.required, Validators.pattern("^[0-9]{10}$")], updateOn: "blur" }],
         designation: ['', Validators.required],
         department: ['', Validators.required],
@@ -83,7 +90,6 @@ export class AddUserComponent implements OnInit {
       this.userService.getById(`${this.base_url}`, this.id)
         .pipe(first())
         .subscribe(x => {
-          //console.log(x);
           this.formData.firstname = x.firstname;
           this.formData.middlename = x.middlename;
           this.formData.email = x.email;
@@ -93,78 +99,77 @@ export class AddUserComponent implements OnInit {
           this.formData.hod = x.hod;
           this.formData.branch = x.branch;
           this.addEditUserForm.patchValue(this.formData)
-          
+
         });
     }
   }
 
+  //Get User FormControl
   get f(): { [key: string]: AbstractControl } {
     return this.addEditUserForm.controls;
   }
 
+  //User Added/Updated Data Action
   onSubmit(): void {
-    
-      this.submitted = true;
-      if (this.addEditUserForm.invalid) {
-        return;
-      }
-      if (this.isAddMode) {
-        this.createUser();
+    this.submitted = true;
+    if (this.addEditUserForm.invalid) {
+      return;
+    }
+    if (this.isAddMode) {
+      this.createUser();
     } else {
-        this.updateUser();
+      this.updateUser();
     }
   }
 
   //Create User
   private createUser() {
-      try {
-          this.userService.CreateWithAuth(`${this.base_url}`, this.addEditUserForm.value).pipe(first()).subscribe({
-            next: (response: any) => {
-              this.toastr.success(response.message);
-              this.router.navigate(["/main/users"]);
-            },
-            error: (err: any) => {
-              this.toastr.error(err.error.message);
-            },
-            complete: () => console.log('completed')
-          });
-        } catch (error: any) {
-          this.toastr.error(error.message);
-        }
-  }
-
-  //Update User
-  private updateUser() {
     try {
-          this.formData.firstname = this.addEditUserForm.value.firstname;
-          this.formData.middlename = this.addEditUserForm.value.middlename;
-          this.formData.email = this.addEditUserForm.value.email;
-          this.formData.mobile_number = this.addEditUserForm.value.mobile_number;
-          this.formData.role_id = this.addEditUserForm.value.designation;
-          this.formData.department = this.addEditUserForm.value.department;
-          this.formData.hod = this.addEditUserForm.value.hod;
-          this.formData.branch = this.addEditUserForm.value.branch;
-      this.userService.update(`${this.base_url}`,this.id, this.formData).pipe(first()).subscribe({
+      this.userService.CreateWithAuth(`${this.base_url}`, this.addEditUserForm.value).pipe(first()).subscribe({
         next: (response: any) => {
           this.toastr.success(response.message);
           this.router.navigate(["/main/users"]);
         },
         error: (err: any) => {
           this.toastr.error(err.error.message);
-        },
-        complete: () => console.log('completed')
+        }
       });
     } catch (error: any) {
       this.toastr.error(error.message);
     }
   }
 
+  //Update User
+  private updateUser() {
+    try {
+      this.formData.firstname = this.addEditUserForm.value.firstname;
+      this.formData.middlename = this.addEditUserForm.value.middlename;
+      this.formData.email = this.addEditUserForm.value.email;
+      this.formData.mobile_number = this.addEditUserForm.value.mobile_number;
+      this.formData.role_id = this.addEditUserForm.value.designation;
+      this.formData.department = this.addEditUserForm.value.department;
+      this.formData.hod = this.addEditUserForm.value.hod;
+      this.formData.branch = this.addEditUserForm.value.branch;
+      this.userService.update(`${this.base_url}`, this.id, this.formData).pipe(first()).subscribe({
+        next: (response: any) => {
+          this.toastr.success(response.message);
+          this.router.navigate(["/main/users"]);
+        },
+        error: (err: any) => {
+          this.toastr.error(err.error.message);
+        }
+      });
+    } catch (error: any) {
+      this.toastr.error(error.message);
+    }
+  }
+
+  //Get Roles For the Add User
   roles(): void {
     this.userService.getAll(this.role_url)
       .subscribe({
         next: (response: any) => {
           this.roleData = response.data;
-          console.log(this.roleData);
         },
         error: (err: any) => {
           this.toastr.error(err.error.message);
@@ -172,6 +177,7 @@ export class AddUserComponent implements OnInit {
       });
   }
 
+  //Form Reset for add user
   onReset(): void {
     this.submitted = false;
     this.addEditUserForm.reset();

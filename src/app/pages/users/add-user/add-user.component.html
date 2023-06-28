@@ -12,7 +12,7 @@
                                     </h4>
                                 </div>
                                 <div class="col-md-6">
-                                    <a [routerLink]="['/main/users']"
+                                    <a [routerLink]="['/main/user-master']"
                                         class="btn mr-1 shadow-z-2 btn-success float-right">{{MY_CONSTANT.back}}</a>
                                 </div>
                             </div>
@@ -88,6 +88,7 @@
                                                         <input type="text" formControlName="mobile_number"
                                                             id="projectinput4" class="form-control"
                                                             placeholder="Mobile Number"
+                                                            maxlength="10"
                                                             [ngClass]="{ 'is-invalid': submitted && f['mobile_number'].errors }">
 
                                                         <div *ngIf="submitted && f['mobile_number'].errors"

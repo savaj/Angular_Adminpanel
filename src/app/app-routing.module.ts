@@ -41,7 +41,7 @@ const routes: Routes = [
           loadChildren: () => import('./pages/right-master/right-master.module').then(m => m.RightMasterModule)
         },
         {
-          path: 'users',
+          path: 'user-master',
           loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule)
         },
         {
@@ -63,6 +63,18 @@ const routes: Routes = [
         {
           path: 'tender-master',
           loadChildren: () => import('./pages/tender-master/tender-master.module').then(m => m.TenderMasterModule)
+        },
+        {
+          path: 'approve-reject-bg',
+          loadChildren: () => import('./pages/approve-reject-bg/approve-reject-bg.module').then(m => m.ApproveRejectBgModule)
+        },
+        {
+          path: 'approve-reject-history-bg',
+          loadChildren: () => import('./pages/approve-reject-history-bg/approve-reject-history-bg.module').then(m => m.ApproveRejectHistoryBgModule)
+        },
+        {
+          path: 'bg-return',
+          loadChildren: () => import('./pages/bg-return/bg-return.module').then(m => m.BgReturnModule)
         },
         {
             path: 'dashboard',

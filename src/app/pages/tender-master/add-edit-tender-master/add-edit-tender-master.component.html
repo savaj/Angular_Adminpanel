@@ -88,9 +88,8 @@
 
                                                         <input type="date" id="projectinput4" class="form-control"
                                                             formControlName="work_order_issue_date">
-
                                                         <div *ngIf="submitted && f['work_order_issue_date'].errors"
-                                                            class="invalid-feedback">
+                                                            class="error-message">
                                                             <div *ngIf="f['work_order_issue_date'].errors['required']">
                                                                 {{TENDOR_CONSTANT.tendor.required.work_order_issue_date}}
                                                             </div>
@@ -135,8 +134,59 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput7">{{TENDOR_CONSTANT.bank.field.vendor}}<span
+                                                                class="required">*</span></label>
+
+                                                        <select id="projectinput7" formControlName="vendor"
+                                                            class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['vendor'].errors }">
+                                                            <option value="" disabled="">Vendor</option>
+                                                            <option *ngFor="let option of vendorData"
+                                                                [value]="option.id">
+                                                                {{ option.name }}</option>
+                                                        </select>
+
+                                                        <div *ngIf="submitted && f['vendor'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['vendor'].errors['required']">
+                                                                {{TENDOR_CONSTANT.bank.required.vendor}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="projectinput8">{{TENDOR_CONSTANT.bank.field.file_no}}<span
+                                                                class="required">*</span></label>
+
+                                                        <input type="text" formControlName="file_no" id="projectinput8"
+                                                            class="form-control" placeholder="File Number"
+                                                            [ngClass]="{ 'is-invalid': submitted && f['file_no'].errors }">
+
+                                                        <div *ngIf="submitted && f['file_no'].errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f['file_no'].errors['required']">
+                                                                {{TENDOR_CONSTANT.bank.required.file_no}}</div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-actions center">
+                                            <ngx-spinner
+                                                bdColor="grey"
+                                                size="small"
+                                                color="#fff"
+                                                type="ball-scale-multiple"
+                                                *ngIf="isLoading"
+                                                [fullScreen]="true"
+                                                template="<img src='../../../assets/img/Loading_2.gif' />">
+                                                </ngx-spinner>
                                             <button type="submit" class="btn btn-success">
                                                 <i class="icon-plus"></i> {{TENDOR_CONSTANT.save}}
                                             </button>

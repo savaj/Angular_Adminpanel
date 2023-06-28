@@ -11,7 +11,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <a [routerLink]="['add-edit-resource']"
-                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{RESOURCE_CONSTANT.resource.addResource}}</a>
+                                        class="btn mr-1 shadow-z-2 btn-success float-right"
+                                        *ngIf="result_data.can_insert">{{RESOURCE_CONSTANT.resource.addResource}}</a>
                                 </div>
                             </div>
                         </div>
@@ -24,29 +25,29 @@
                                     <tr>
                                         <th>{{RESOURCE_CONSTANT.resource.field.resourcename}}</th>
                                         <th>{{RESOURCE_CONSTANT.resource.field.resourceurl}}</th>
-                                        <th>{{RESOURCE_CONSTANT.status}}</th>
-                                        <th>{{RESOURCE_CONSTANT.action}}</th>
+                                        <th *ngIf="result_data.can_edit">{{RESOURCE_CONSTANT.status}}</th>
+                                        <th *ngIf="result_data.can_edit || result_data.can_delete">{{RESOURCE_CONSTANT.action}}</th>
                                     </tr>
                                 </thead> 
                                  <tbody>
                                     <tr *ngFor="let group of resourcesData">
                                         <td>{{group.resource_name}}</td>
                                         <td>{{group.resource_url}}</td>
-                                        <td>
+                                        <td *ngIf="result_data.can_edit">
                                             <label class="switch" (change)="updateStatus(group.id, group.is_active)">
                                                 <input type="checkbox" [checked]="group.is_active === 1 ? true : null">
                                                 <span class="slider round"></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td *ngIf="result_data.can_edit || result_data.can_delete">
                                             <div class="form-group mt-1 text-center">
                                                 <a routerLink="add-edit-resource/{{group.id}}"
                                                 class="info p-0 mt-1" data-original-title="" title="">
-                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
+                                                    <i class="icon-pencil font-medium-3 mr-2" title="edit" *ngIf="result_data.can_edit"></i>
                                                 </a>
                                                 <a  class="danger p-0 confirm-text"
                                                     (click)="deleteResource(group.id, group.is_deleted)">
-                                                    <i class="icon-trash font-medium-3 mr-2"></i>
+                                                    <i class="icon-trash font-medium-3 mr-2" title="delete" *ngIf="result_data.can_delete"></i>
                                                 </a>
                                             </div>
                                         </td>

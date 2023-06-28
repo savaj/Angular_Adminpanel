@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { AlertService } from 'src/app/modules/shared/alert.service';
+import { SharedService } from 'src/app/modules/shared/shared.service';
 import { CommonService } from 'src/app/services/common.service';
+import { LocalService } from 'src/app/services/local.service';
 
 @Component({
   selector: 'app-right-master',
@@ -13,6 +16,9 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./right-master.component.scss']
 })
 export class RightMasterComponent implements OnInit {
+  public menu: any[] = [];
+  baseUrl = "rights/resource_and_role";
+  extractedData:any[] = [];
   readonly RIGHT_CONSTANT = GlobalConstants;
   rightsData: any[] = [];
   updatedrightsData: any[] = [];
@@ -32,7 +38,8 @@ export class RightMasterComponent implements OnInit {
   selectEdit: boolean | undefined = false;
   selectView: boolean | undefined = false;
   selectDelete: boolean | undefined = false;
-
+  result_data: any = {can_insert: false, can_edit: false, can_view: false, can_delete: false};;
+  isLoading = false;
   roleData: any[] = [];
   searchForm: FormGroup = new FormGroup({
     role: new FormControl(''),
@@ -44,7 +51,13 @@ export class RightMasterComponent implements OnInit {
   roleId: number | undefined;
   constructor(private commonService: CommonService, private toastr: ToastrService,
     private router: Router, private sweetAlert: AlertService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder, private localStore: LocalService,
+    private spinner: NgxSpinnerService,
+    private shared: SharedService) { 
+      this.shared.getParameter().subscribe(parameter => {
+        this.result_data = parameter;
+      });
+    }
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group(
@@ -56,14 +69,29 @@ export class RightMasterComponent implements OnInit {
     this.rights();
     this.roles();
     this.menus();
+   
   }
 
+  arrayUnique(array: any[]) {
+    var a = array.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) {
+            if(a[i].menu_id === a[j].menu_id)
+                a.splice(j--, 1);
+        }
+    }
+
+    return a;
+}
+
   rights(roleId?: number, menuId?: number): void {
+   
     this.roleId = roleId;
-    console.log(this.roleId);
     this.commonService.getByData(this.resourceUrl, { roleId: roleId ?? '', menuId: menuId ?? '' })
       .subscribe({
         next: (response: any) => {
+          this.spinner.show();
+          this.isLoading = true;
           const rightResultData = response.data;
             this.commonService.getAll(`${this.resourceResUrl}/${this.adminMenuWithResourceAllUrl}`)
             .subscribe({
@@ -79,24 +107,30 @@ export class RightMasterComponent implements OnInit {
                     })
                     this.rightsData = this.rightsMenuData;
                   }
-                  if(rightResultData.length > 0 && rightResultData.filter((e:any) => e.role_id === this.roleId) && roleId){
-                    this.rightsData = rightResultData;
+                  if(rightResultData.length > 0 && rightResultData.filter((e:any) => e.role_id === this.roleId) && roleId || (roleId && menuId)){
+                    if(roleId && menuId){
+                      this.rightsData = rightResultData; 
+                    } else{
+                      this.rightsData = this.arrayUnique(rightResultData.concat(this.rightsMenuData)); 
+                    }
                   }
                   if(roleId){
                      this.selectAllInsert = this.rightsData?.every((val:any) => val.can_insert === true ? true : false);
                     this.selectAllEdit = this.rightsData?.every((val:any) => val.can_edit === true ? true : false);
                     this.selectAllView = this.rightsData?.every((val:any) => val.can_view === true ? true : false);
                     this.selectAllDelete = this.rightsData?.every((val:any) => val.can_delete === true ? true : false);
-                  }
-                 
+                  } 
                 },error: (err: any) => {
+                  this.spinner.hide();
                   this.toastr.error(err.error.message);
-                } 
+                }, complete: () => {
+                  this.spinner.hide();
+                }
             });
             
             var table: any;
             if ( $.fn.dataTable.isDataTable( '.rights-datatable' ) ) {
-              table = $('.rights-datatable').DataTable();
+                table = $('.rights-datatable').DataTable();
           }
           else {
               table = $('.rights-datatable').DataTable( {
@@ -105,43 +139,12 @@ export class RightMasterComponent implements OnInit {
                 searching: false,
                 responsive: true,
                 ordering: false
-              } );
+              });
+              
           }
-          
-          
-          
-              
-              // console.log(this.rightsData);
-                // if(this.rightsData.length > 0){
-                //   this.selectAllInsert = this.rightsData?.every(val => val.can_insert === (null || false) ? false : true);
-                //   this.selectAllEdit = this.rightsData?.every(val => val.can_edit === (null || false) ? false : true);
-                //   this.selectAllView = this.rightsData?.every(val => val.can_view === (null || false) ? false : true);
-                //   this.selectAllDelete = this.rightsData?.every(val => val.can_delete === (null || false) ? false : true);
-                // }
-              
-            // if(this.rightsMenuData.length === this.rightsData.length){
-            //   if(this.rightsData.length > 0){
-            //     // this.selectRoleId = this.rightsData.role_id;
-            //     // this.selectMenuId = this.rightsData.menu_id;
-            //     this.selectAllInsert = this.rightsData?.every(val => val.can_insert === true ? true : false);
-            //     this.selectAllEdit = this.rightsData?.every(val => val.can_edit === true ? true : false);
-            //     this.selectAllView = this.rightsData?.every(val => val.can_view === true ? true : false);
-            //     this.selectAllDelete = this.rightsData?.every(val => val.can_delete === true ? true : false);
-            //   }
-            // } else {
-            //     this.rightsData = this.rightsMenuData;
-            //     console.log(this.rightsData);
-            //     this.selectAllInsert = this.rightsData?.every(val => val.can_insert === (null || false) ? false : true);
-            //     this.selectAllEdit = this.rightsData?.every(val => val.can_edit === (null || false) ? false : true);
-            //     this.selectAllView = this.rightsData?.every(val => val.can_view === (null || false) ? false : true);
-            //     this.selectAllDelete = this.rightsData?.every(val => val.can_delete === (null || false) ? false : true);
-            // }
-          
-          //setTimeout(() => {
-               
-         // }, 500);
         },
         error: (err: any) => {
+          this.spinner.hide();
           this.toastr.error(err.error.message);
         }
       });
@@ -190,15 +193,20 @@ export class RightMasterComponent implements OnInit {
         rightres.role_id = this.roleId;
         return rightres;
       });
+      this.spinner.show();
+      this.isLoading = true;
       this.commonService.bulkupdate(`${this.rightsUrl}`, {"data": this.rightsData}).pipe(first()).subscribe({
         next: (response: any) => {
           this.toastr.success(response.message);
           this.router.navigate(["/main/right-master"]);
         },
         error: (err: any) => {
+          this.spinner.hide();
           this.toastr.error(err.error.message);
         },
-        complete: () => console.log('completed')
+        complete: () => {
+          this.spinner.hide();
+        }
       });
     } catch (error: any) {
       this.toastr.error(error.message);

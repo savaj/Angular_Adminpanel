@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -23,6 +23,9 @@ import { ResourceMasterModule } from './pages/resource-master/resource-master.mo
 import { RightMasterModule } from './pages/right-master/right-master.module';
 import { BankdetailsMasterModule } from './pages/bankdetails-master/bankdetails-master.module';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { JwtModule } from '@auth0/angular-jwt';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { BgReturnModule } from './pages/bg-return/bg-return.module';
 
 
 @NgModule({
@@ -49,16 +52,26 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
       positionClass: 'toast-top-right',
       preventDuplicates: true
     }), 
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token'),
+        allowedDomains: ['http://localhost:4200/, http://10.10.2.150:5984', '*'], // Replace with your domain
+        disallowedRoutes: [''] // Replace with your login route
+      }
+    }),
     BrowserAnimationsModule,
+    NgxSpinnerModule,
     UsersModule,
     FlowMasterModule,
     RoleMasterModule,
     ResourceMasterModule,
     RightMasterModule,
+    BgReturnModule,
     BankdetailsMasterModule,
     DataTablesModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

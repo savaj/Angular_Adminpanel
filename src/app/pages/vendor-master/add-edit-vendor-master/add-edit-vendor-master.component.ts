@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
@@ -13,7 +14,7 @@ import { CommonService } from 'src/app/services/common.service';
 })
 export class AddEditVendorMasterComponent implements OnInit {
   readonly VENDOR_CONSTANT = GlobalConstants;
-
+  isLoading = false;
   base_url = 'vendors';
   id!: number;
   isAddMode!: boolean;
@@ -36,6 +37,7 @@ export class AddEditVendorMasterComponent implements OnInit {
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private commonService: CommonService,
+    private spinner: NgxSpinnerService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -44,15 +46,17 @@ export class AddEditVendorMasterComponent implements OnInit {
 
     this.addEditVendorForm = this.formBuilder.group(
       {
-        vendor_name: ['', Validators.required],
+        vendor_name: ['', { validators: [Validators.required], updateOn: "blur"}],
         vendor_address: ['', Validators.required],
-        contact_person_name: ['', Validators.required],
-        contact_person_email: ['', { validators: [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$")], updateOn: "blur" }],
+        contact_person_name: ['', { validators: [Validators.required, Validators.pattern("^[A-Za-z]+$")], updateOn: "blur"}],
+        contact_person_email: ['', { validators: [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,4}$")], updateOn: "blur" }],
         contact_person_mobile_no: ['',{ validators: [Validators.required, Validators.pattern("^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$")], updateOn: "blur" }],
       },
     );
 
+    
     if (!this.isAddMode) {
+      this.spinner.show();
       this.commonService.getById(`${this.base_url}`, this.id)
         .pipe(first())
         .subscribe(x => {
@@ -61,6 +65,7 @@ export class AddEditVendorMasterComponent implements OnInit {
           this.formData.contact_person_name = x.contact_person_name;
           this.formData.contact_person_email = x.contact_person_email;
           this.formData.contact_person_mobile_no = x.contact_person_mobile_no;
+          this.spinner.hide();
           this.addEditVendorForm.patchValue(this.formData)
         });
     }
@@ -76,6 +81,7 @@ export class AddEditVendorMasterComponent implements OnInit {
     if (this.addEditVendorForm.invalid) {
       return;
     }
+    this.spinner.show()
     if (this.isAddMode) {
       this.createVendor();
     } else {
@@ -92,11 +98,15 @@ export class AddEditVendorMasterComponent implements OnInit {
           this.router.navigate(["/main/vendor-master"]);
         },
         error: (err: any) => {
+          this.spinner.hide()
           this.toastr.error(err.error.message);
         },
-        complete: () => console.log('completed')
+        complete: () => {
+          this.spinner.hide()
+        }
       });
     } catch (error: any) {
+      this.spinner.hide()
       this.toastr.error(error.message);
     }
   }
@@ -115,11 +125,15 @@ export class AddEditVendorMasterComponent implements OnInit {
           this.router.navigate(["/main/vendor-master"]);
         },
         error: (err: any) => {
+          this.spinner.hide()
           this.toastr.error(err.error.message);
         },
-        complete: () => console.log('completed')
+        complete: () => {
+          this.spinner.hide()
+        }
       });
     } catch (error: any) {
+      this.spinner.hide()
       this.toastr.error(error.message);
     }
   }

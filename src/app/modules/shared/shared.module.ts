@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertService } from './alert.service';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { SharedService } from './shared.service';
 
 
 @NgModule({
@@ -11,14 +12,15 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
   ],
   exports: [
     ReactiveFormsModule,
     AutocompleteLibModule
   ],
   providers: [
-    AlertService
-  ],
+    AlertService,
+    SharedService
+  ]
 })
 export class SharedModule { }

@@ -1,12 +1,10 @@
-<ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main" >
-    <li class="has-sub nav-item open">
-      <a (click)="handleMainMenuAction()"
-      [ngClass]="{active: isMainActive || isOneOfChildrenActive}"><i class="{{menuItem.iconClasses}}"
-      *ngIf="isExpandable && menuItem.children.length > 0"></i><span class="menu-title">{{ menuItem.name }}</span></a>
-      <ul class="menu-content" *ngFor="let child of menuItem.children">
-       <li [class.active]="activeMenuItem === child.name"><a (click)="setActiveMenuItem(child.name)"
-           [routerLink]="child.path" class="menu-item">{{ child.name }}</a>
+<ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
+    <li class="nav-item" [ngClass]="{active: isMainActive}">
+      <a (click)="handleMainMenuAction()"><i class="{{menuItem.iconClasses}} {{menuItem.name}}"></i><span class="menu-title">{{ menuItem.name }}</span></a>
+      <!-- <ul class="menu-content" *ngFor="let menu of menuItem">
+       <li [class.active]="activeMenuItem === menu.name" class="{{menu.name}}"><a (click)="setActiveMenuItem(menu.name)"
+           [routerLink]="menu.path" class="menu-item">{{ menu.name }}</a>
         </li>
-      </ul>
+      </ul> -->
     </li>
   </ul>

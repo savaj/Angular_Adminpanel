@@ -68,9 +68,6 @@ export class LoginComponent implements OnInit {
         this.answer = this.num1 * this.num2;
         break;
     }
-    $('#captcha').html("");
-
-    
     // var code;
     // var canv: any | null = document.createElement("canvas");
     //  canv.id = "captcha";
@@ -114,8 +111,7 @@ export class LoginComponent implements OnInit {
             },
             error: (err: any) => {
               this.toastr.error(err.error.message);
-            },
-            complete: () => console.log('completed')
+            }
           });
         } else {
           this.captchaValid = false;

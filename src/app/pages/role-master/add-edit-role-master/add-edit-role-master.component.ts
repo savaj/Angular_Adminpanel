@@ -73,8 +73,7 @@ private createRole() {
         },
         error: (err: any) => {
           this.toastr.error(err.error.message);
-        },
-        complete: () => console.log('completed')
+        }
       });
     } catch (error: any) {
       this.toastr.error(error.message);
@@ -92,8 +91,7 @@ try {
     },
     error: (err: any) => {
       this.toastr.error(err.error.message);
-    },
-    complete: () => console.log('completed')
+    }
   });
 } catch (error: any) {
   this.toastr.error(error.message);

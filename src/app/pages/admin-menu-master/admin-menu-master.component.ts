@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { AlertService } from 'src/app/modules/shared/alert.service';
+import { SharedService } from 'src/app/modules/shared/shared.service';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
@@ -18,10 +19,18 @@ export class AdminMenuMasterComponent implements OnInit {
   resourceUrl: string = 'resources/menu';
   statusUrl: string = '/status';
   isToggled: boolean = false;
+  result_data: any = { can_insert: false, can_edit: false, can_view: false, can_delete: false };
+  public data: any;
   constructor(private commonService: CommonService, private toastr: ToastrService,
-    private router: Router, private sweetAlert: AlertService) { }
+    private router: Router, private sweetAlert: AlertService, private route: ActivatedRoute,
+    private shared: SharedService) {
+    this.shared.getParameter().subscribe(parameter => {
+      this.result_data = parameter;
+    });
+  }
 
   ngOnInit(): void {
+    this.menuData = [];
     this.menus();
   }
 
@@ -31,20 +40,42 @@ export class AdminMenuMasterComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.menuData = response.data;
-          setTimeout(() => {
-            $('.menu-datatable').DataTable({
-              pagingType: 'full_numbers',
-              processing: true,
-              lengthMenu: [5, 10, 25],
-              responsive: true,
-              ordering: false,
-              drawCallback: function () {
-                $('.dataTables_paginate').addClass('btn btn-sm btn-light');
-                $('.dataTables_paginate > span a').addClass('page-link');
-                $('.dataTables_paginate > span .paginate_button.current').addClass('bg-success');
-              }
-            });
-          }, 500);
+        },
+        error: (err: any) => {
+          this.toastr.error(err.error.message);
+        }
+      });
+    setTimeout(() => {
+      $('.menu-datatable').DataTable({
+        pagingType: 'full_numbers',
+        processing: true,
+        lengthMenu: [5, 10, 25],
+        responsive: true,
+        ordering: false,
+        "language": {
+          "emptyTable": "No Admin Menu found"
+        },
+        drawCallback: function () {
+          $('.dataTables_paginate').addClass('btn btn-sm btn-light');
+          $('.dataTables_paginate > span a').addClass('page-link');
+          $('.dataTables_paginate > span .paginate_button.current').addClass('bg-success');
+          if ($(this).find('tbody tr').length <= 1 && $(this).find('tbody tr td').attr('class') === 'dataTables_empty') {
+            $('.dataTables_paginate').hide();
+          } else {
+            $('.dataTables_paginate').show();
+          }
+        }
+      });
+    }, 500);
+
+  }
+
+  async rankUpdateResult() {
+    const listUrl = "/list";
+    this.commonService.getAll(`${this.resourceUrl}${listUrl}`)
+      .subscribe({
+        next: (response: any) => {
+          this.menuData = response.data;
         },
         error: (err: any) => {
           this.toastr.error(err.error.message);
@@ -85,78 +116,58 @@ export class AdminMenuMasterComponent implements OnInit {
         this.toastr.success(response.message);
       },
       error: (err: any) => {
-        console.log(err);
-
         this.toastr.error(err.error.message);
-      },
-      complete: () => {
-        console.log('completed');
       }
     });
   }
 
-  swapRank(length: number, index1: any, index2: number, direction: string): void {
-    //console.log(item);
-    // console.log(direction === 1 ? 'up' : 'down');
-    // const currentIndex = this.menuData?.findIndex((i: any) => i === item);
-    // const newIndex = currentIndex + direction;
-    // if (newIndex >= 0 && newIndex < this.menuData.length) {
-    //   const temp = this.menuData[currentIndex].MenuRank;
-    //   this.menuData[currentIndex].MenuRank = this.menuData[newIndex].MenuRank;
-    //   this.menuData[newIndex].MenuRank = temp;
-    // }
-    if (index2 === -1 && direction === 'up') {
-      this.toastr.error("Rank is already on top")
-    } else if (index2 === length && direction === 'down') {
-      this.toastr.error("This Rank is last please try different one")
-    } else {
-      [this.menuData[index1], this.menuData[index2]] = [this.menuData[index2], this.menuData[index1]];
-      // if(direction === 'up'){
-      //   const menuResult: any[] = [];
-      // this.menuData.forEach((item) => {
-      //   if(item.MenuRank === 0){
-      //     item.MenuRank = 1;
-      //   } else {
-      //     item.MenuRank = item.MenuRank - 1;
-      //   }
-      //   menuResult.push({ menuId: item.id, menuRank: item.MenuRank });
-      // })
-      // console.log(menuResult);
-      // } else {
-      //   const menuResult: any[] = [];
-      //   this.menuData.forEach((item) => {
-      //     if(item.MenuRank === 0){
-      //       item.MenuRank = 1;
-      //     } else {
-      //       item.MenuRank = item.MenuRank - 1;
-      //     }
-      //     menuResult.push({ menuId: item.id, menuRank: item.MenuRank });
-      //   })
-      // }
 
-      
-      
-      // const rankUrl = '/rank'
-      // this.commonService.updateWithoutId(`${this.resourceUrl}${rankUrl}`, {
-      //   "data": menuResult }).pipe(first()).subscribe({
-      //   next: (response) => {
-      //     this.toastr.success(response.message);
-      //     this.router.navigateByUrl('/', { skipLocationChange: false }).then(() => {
-      //       this.router.navigate([`/main/admin-menu-master`]).then(() => {
-      //       })
-      //     })
-      //     //this.menus();
-      //   },
-      //   error: (err: any) => {
-      //     console.log(err);
+  swapRank(length: number, index1: number, index2: number, dir: string, rank: number): void {
+    const firstRank = this.menuData.find((menRes) => menRes.MenuRank === rank).MenuRank;
 
-      //     this.toastr.error(err.error.message);
-      //   },
-      //   complete: () => {
-      //     console.log('completed');
-      //   }
-      // });
+    const minValue = this.menuData.reduce((min, current) => {
+      return current.MenuRank < min ? current.MenuRank : min;
+    }, Number.MAX_VALUE);
+
+    const maxValue = this.menuData.reduce((max, current) => {
+      return current.value > max ? current.value : max;
+    }, Number.MIN_VALUE);
+
+    if (dir == "up" && (rank - 1) < minValue) {
+      this.toastr.error("This Menu already have min rank!");
+    }
+    else if (dir == "down" && (rank + 1) > maxValue) {
+      this.toastr.error("This Menu already have max rank!");
+    }
+    else {
+      this.menuData.forEach((val, index, arr) => {
+        if (dir == "up" && val['MenuRank'] == rank) {
+          if (rank > 1) {
+            const previousMenu = this.menuData.find((m) => m.MenuRank === rank - 1);
+            previousMenu.MenuRank += 1;
+            val['MenuRank'] -= 1;
+          }
+        }
+        else if (dir == "down" && val['MenuRank'] == rank) {
+          if (rank < length) {
+            const nextMenu = this.menuData.find((m) => m.MenuRank === rank + 1);
+            nextMenu.MenuRank -= 1;
+            val['MenuRank'] += 1;
+          }
+        }
+      })
+      this.commonService.updateWithoutId(`${this.resourceUrl}/rank`, { data: this.menuData }).pipe(first()).subscribe({
+        next: (response) => {
+          this.router.navigateByUrl('/', { skipLocationChange: false }).then(() => {
+            this.router.navigate([`/main/admin-menu-master`]).then(() => {
+            })
+          })
+          this.toastr.success(response.message);
+        },
+        error: (err: any) => {
+          this.toastr.error(err.error.message);
+        }
+      });
     }
   }
-
 }

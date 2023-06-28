@@ -40,7 +40,7 @@
                                 <button type="submit" class="btn btn-success">{{RIGHT_CONSTANT.bindmenu}}
                                 </button>
                                 <button type="button" class="btn btn-info ml-2" *ngIf="rightsData.length > 0"
-                                    (click)="saveMenu()">{{RIGHT_CONSTANT.savemenu}}
+                                    (click)="saveMenu()" [hidden]="(result_data) && (!result_data.can_insert || !result_data.can_edit)">{{RIGHT_CONSTANT.savemenu}}
                                 </button>
                             </div>
                         </div>
@@ -48,6 +48,15 @@
                 </div>
                 <div class="card-body">
                     <div class="card-block">
+                        <ngx-spinner
+                            bdColor="grey"
+                            size="small"
+                            color="#fff"
+                            type="ball-scale-multiple"
+                            *ngIf="isLoading"
+                            [fullScreen]="true"
+                            template="<img src='../../../assets/img/Loading_2.gif' />">
+                            </ngx-spinner>
                         <table class="table table-striped table-bordered text-center rights-datatable" datatable>
                             <thead>
                                 <tr>
@@ -133,9 +142,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <div id="empty-message">
-                            No Record Found
-                        </div> -->
                     </div>
                 </div>
             </div>

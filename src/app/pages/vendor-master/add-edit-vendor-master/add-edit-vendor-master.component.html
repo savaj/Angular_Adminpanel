@@ -42,6 +42,7 @@
                                                             <div *ngIf="f['vendor_name'].errors['required']">
                                                                 {{VENDOR_CONSTANT.vendor.required.vendorname}}</div>
                                                         </div>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -79,6 +80,11 @@
                                                             <div *ngIf="f['contact_person_name'].errors['required']">
                                                                 {{VENDOR_CONSTANT.vendor.required.contact_person_name}}</div>
                                                         </div>
+                                                        <div class="help-block warning" *ngIf="f['contact_person_name'].errors && f['contact_person_name'].dirty && f['contact_person_name'].touched">
+                                                            <ul role="alert">
+                                                                <li *ngIf="f['contact_person_name'].errors['pattern']">{{VENDOR_CONSTANT.onlyAlphabets}}</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -115,6 +121,7 @@
                                                         <input type="text" formControlName="contact_person_mobile_no"
                                                             id="projectinput5" class="form-control"
                                                             placeholder="Contact Person Mobile No"
+                                                            maxlength="10"
                                                             [ngClass]="{ 'is-invalid': submitted && f['contact_person_mobile_no'].errors }">
 
                                                         <div *ngIf="submitted && f['contact_person_mobile_no'].errors"
@@ -125,6 +132,7 @@
                                                         <div class="help-block warning" *ngIf="f['contact_person_mobile_no'].errors && f['contact_person_mobile_no'].dirty && f['contact_person_mobile_no'].touched">
                                                             <ul role="alert">
                                                                 <li *ngIf="f['contact_person_mobile_no'].errors['pattern']">{{VENDOR_CONSTANT.vendor.validMobileNo}}(e.g 9854652535)</li>
+                                                                <li *ngIf="f['contact_person_mobile_no'].errors['maxlength']">{{VENDOR_CONSTANT.amount_maxlength}}</li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -132,6 +140,15 @@
                                             </div>
                                         </div>
                                         <div class="form-actions center">
+                                            <ngx-spinner
+                                                bdColor="grey"
+                                                size="small"
+                                                color="#fff"
+                                                type="ball-scale-multiple"
+                                                *ngIf="isLoading"
+                                                [fullScreen]="true"
+                                                template="<img src='../../../assets/img/Loading_2.gif' />">
+                                                </ngx-spinner>
                                             <button type="submit" class="btn btn-success"
                                             [disabled]="!addEditVendorForm.valid">
                                                 <i class="icon-plus"></i> {{VENDOR_CONSTANT.save}}

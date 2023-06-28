@@ -77,7 +77,6 @@ export class AddEditAdminMenuMasterComponent implements OnInit {
       this.commonService.getById(`${this.base_url}`, this.id)
         .pipe(first())
         .subscribe(x => {
-          console.log('value', x);
           const editForm = {
             name: '',
             menutype: '',
@@ -98,7 +97,6 @@ export class AddEditAdminMenuMasterComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.resourceData = response.data;
-          console.log(this.resourceData);
         },
         error: (err: any) => {
           this.toastr.error(err.error.message);
@@ -138,8 +136,7 @@ export class AddEditAdminMenuMasterComponent implements OnInit {
         },
         error: (err: any) => {
           this.toastr.error(err.error.message);
-        },
-        complete: () => console.log('completed')
+        }
       });
     } catch (error: any) {
       this.toastr.error(error.message);
@@ -156,8 +153,7 @@ export class AddEditAdminMenuMasterComponent implements OnInit {
         },
         error: (err: any) => {
           this.toastr.error(err.error.message);
-        },
-        complete: () => console.log('completed')
+        }
       });
     } catch (error: any) {
       this.toastr.error(error.message);

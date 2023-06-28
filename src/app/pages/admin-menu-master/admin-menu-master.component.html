@@ -11,7 +11,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <a [routerLink]="['add-edit-menu-master']"
-                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{MENU_CONSTANT.menu.addMenu}}</a>
+                                        class="btn mr-1 shadow-z-2 btn-success float-right" *ngIf="result_data.can_insert">{{MENU_CONSTANT.menu.addMenu}}</a>
                                 </div>
                             </div>
                         </div>
@@ -23,37 +23,40 @@
                                 <thead>
                                     <tr>
                                         <th>{{MENU_CONSTANT.menu.field.menuname}}</th>
-                                        <th>{{MENU_CONSTANT.status}}</th>
-                                        <th>{{MENU_CONSTANT.action}}</th>
+                                        <th *ngIf="result_data.can_edit">{{MENU_CONSTANT.status}}</th>
+                                        <th *ngIf="result_data.can_edit || result_data.can_delete">{{MENU_CONSTANT.action}}</th>
                                     </tr>
                                 </thead>
                                  <tbody *ngIf="menuData.length > 0">
                                     <tr *ngFor="let group of menuData; let i = index">
                                         <td>{{group.Name}}</td>
-                                        <td>
+                                        <td *ngIf="result_data.can_edit">
                                             <label class="switch" (change)="updateStatus(group.id, group.is_active)">
                                                 <input type="checkbox" [checked]="group.is_active === 1 ? true : null">
                                                 <span class="slider round"></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td *ngIf="result_data.can_edit || result_data.can_delete">
                                             <div class="form-group mt-1 text-center">
                                                 <a routerLink="add-edit-menu-master/{{group.id}}"
                                                 class="info p-0 mt-1" data-original-title="" title="">
-                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
+                                                    <i class="icon-pencil font-medium-3 mr-2" title="edit" *ngIf="result_data.can_edit"></i>
                                                 </a>
-                                                <a (click)="swapRank(menuData.length, i, i-1, 'up')"><i class="icon-arrow-up mr-2 font-medium-3"></i></a>
-                                                <a (click)="swapRank(menuData.length, i, i+1, 'down')"><i class="icon-arrow-down mr-2 font-medium-3"></i></a>
+                                                <a (click)="swapRank(menuData.length, i, i-1, 'up', group.MenuRank)"><i class="icon-arrow-up mr-2 font-medium-3" title="rank up" *ngIf="result_data.can_edit"></i></a>
+                                                <a (click)="swapRank(menuData.length, i, i+1, 'down', group.MenuRank)"><i class="icon-arrow-down mr-2 font-medium-3" title="rank down" *ngIf="result_data.can_edit"></i></a>
                                                 <a  class="danger p-0 confirm-text"
                                                     (click)="deleteMenu(group.id, group.is_deleted)">
-                                                    <i class="icon-trash font-medium-3 mr-2"></i>
+                                                    <i class="icon-trash font-medium-3 mr-2" title="delete" *ngIf="result_data.can_delete"></i>
                                                 </a>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tbody *ngIf="menuData.length === 0">
-                                    <td>No Data Found</td>
+                                    <tr>
+                                        <td colspan="3">No Data Found</td>    
+                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>

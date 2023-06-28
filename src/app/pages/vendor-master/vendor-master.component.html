@@ -11,7 +11,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <a [routerLink]="['add-edit-vendor']"
-                                        class="btn mr-1 shadow-z-2 btn-success float-right">{{VENDOR_CONSTANT.vendor.addVendor}}</a>
+                                        class="btn mr-1 shadow-z-2 btn-success float-right"
+                                        *ngIf="result_data.can_insert">{{VENDOR_CONSTANT.vendor.addVendor}}</a>
                                 </div>
                             </div>
                         </div>
@@ -19,6 +20,15 @@
                     <div class="card-body collapse show">
                         <div class="card-block card-dashboard">
                             <p class="card-text">{{VENDOR_CONSTANT.vendor.vendorsListing}}</p>
+                            <ngx-spinner
+                            bdColor="grey"
+                            size="small"
+                            color="#fff"
+                            type="ball-scale-multiple"
+                            *ngIf="isLoading"
+                            [fullScreen]="true"
+                            template="<img src='../../../assets/img/Loading_2.gif' />">
+                            </ngx-spinner>
                             <table class="table table-striped table-bordered vendors-datatable" #dataTable>
                                 <thead>
                                     <tr>
@@ -27,8 +37,8 @@
                                         <th>{{VENDOR_CONSTANT.vendor.field.contact_person_name}}</th>
                                         <th>{{VENDOR_CONSTANT.vendor.field.contact_person_email}}</th>
                                         <th>{{VENDOR_CONSTANT.vendor.field.contact_person_mobile_no}}</th>
-                                        <th>{{VENDOR_CONSTANT.status}}</th>
-                                        <th>{{VENDOR_CONSTANT.action}}</th>
+                                        <th  *ngIf="result_data.can_edit">{{VENDOR_CONSTANT.status}}</th>
+                                        <th *ngIf="result_data.can_edit || result_data.can_delete">{{VENDOR_CONSTANT.action}}</th>
                                     </tr>
                                 </thead> 
                                  <tbody>
@@ -38,21 +48,21 @@
                                         <td>{{group.contact_person_name}}</td>
                                         <td>{{group.contact_person_email}}</td>
                                         <td>{{group.contact_person_mobile_no}}</td>
-                                        <td>
+                                        <td *ngIf="result_data.can_edit">
                                             <label class="switch" (change)="updateStatus(group.id, group.is_active)">
                                                 <input type="checkbox" [checked]="group.is_active === 1 ? true : null">
                                                 <span class="slider round"></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td *ngIf="result_data.can_edit || result_data.can_delete">
                                             <div class="form-group mt-1 text-center">
                                                 <a routerLink="add-edit-vendor/{{group.id}}"
                                                 class="info p-0 mt-1" data-original-title="" title="">
-                                                    <i class="icon-pencil font-medium-3 mr-2"></i>
+                                                    <i class="icon-pencil font-medium-3 mr-2" *ngIf="result_data.can_edit"></i>
                                                 </a>
                                                 <a  class="danger p-0 confirm-text"
                                                     (click)="deleteVendor(group.id, group.is_deleted)">
-                                                    <i class="icon-trash font-medium-3 mr-2"></i>
+                                                    <i class="icon-trash font-medium-3 mr-2" *ngIf="result_data.can_delete"></i>
                                                 </a>
                                             </div>
                                         </td>

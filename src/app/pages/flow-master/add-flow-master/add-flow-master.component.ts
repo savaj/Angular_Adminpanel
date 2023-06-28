@@ -35,7 +35,7 @@ export class AddFlowMasterComponent implements OnInit {
   previewData: any[] = [];
   finalData: any[] = [];
   previewFlag: boolean = false;
-  data!:{ id: number; name: string; }[];
+  data!: { id: number; name: string; }[];
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -48,38 +48,37 @@ export class AddFlowMasterComponent implements OnInit {
     this.flow_masterForm = this.formBuilder.group(
       {
         designation: ['', Validators.required],
-        send_from:  ['', Validators.required],
+        send_from: ['', Validators.required],
         send_to: ['', Validators.required],
       },
-      );
-      this.getAllRoles();
-      this.submitData = [];
-      this.previewData = [];
-      if (!this.isAddMode) {
-        this.commonService.getById(`${this.base_url}`, this.id)
-          .pipe(first())
-          .subscribe(x => {
-            const editData: any[] = [];
-            x.forEach((item: any) => {
-              item.designation = {
-                id: item.designation_id,
-                name: item.designation,
-              };
-              item.send_from = {
-                id: item.send_from_id,
-                name: item.send_from,
-              };
-              item.send_to = {
-                id: item.send_to_id,
-                name: item.send_to,
-              };
-              editData.push(item);
-            })
-            this.previewData = editData;
-            console.log(this.previewData);
-            //this.addEditMenuForm.patchValue(editForm)
-          });
-      }
+    );
+    this.getAllRoles();
+    this.submitData = [];
+    this.previewData = [];
+    if (!this.isAddMode) {
+      this.commonService.getById(`${this.base_url}`, this.id)
+        .pipe(first())
+        .subscribe(x => {
+          const editData: any[] = [];
+          x.forEach((item: any) => {
+            item.designation = {
+              id: item.designation_id,
+              name: item.designation,
+            };
+            item.send_from = {
+              id: item.send_from_id,
+              name: item.send_from,
+            };
+            item.send_to = {
+              id: item.send_to_id,
+              name: item.send_to,
+            };
+            editData.push(item);
+          })
+          this.previewData = editData;
+          //this.addEditMenuForm.patchValue(editForm)
+        });
+    }
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -93,36 +92,36 @@ export class AddFlowMasterComponent implements OnInit {
       // this.flow_masterForm .clearValidators();
       // this.flow_masterForm .updateValueAndValidity();
       // this.submitted = false;
-        // Form is valid, perform necessary actions
-        if(this.isAddMode){
-          this.previewData.push({
-            designation: this.flow_masterForm.value.designation,
-            send_from: this.flow_masterForm.value.send_from,
-            send_to: this.flow_masterForm.value.send_to
-          });
-        } else {
-          //this.submitData = this.previewData;
-          this.previewData.push({
-            designation: this.flow_masterForm.value.designation,
-            send_from: this.flow_masterForm.value.send_from,
-            send_to: this.flow_masterForm.value.send_to
-          });
-        }       
-        //this.previewDatathis.submitData;
-        // this.f["send_from"].reset();
-        // this.f["send_to"].reset();
+      // Form is valid, perform necessary actions
+      if (this.isAddMode) {
+        this.previewData.push({
+          designation: this.flow_masterForm.value.designation,
+          send_from: this.flow_masterForm.value.send_from,
+          send_to: this.flow_masterForm.value.send_to
+        });
       } else {
-        // Form is invalid, display validation errors
-        this.flow_masterForm.markAllAsTouched();
+        //this.submitData = this.previewData;
+        this.previewData.push({
+          designation: this.flow_masterForm.value.designation,
+          send_from: this.flow_masterForm.value.send_from,
+          send_to: this.flow_masterForm.value.send_to
+        });
       }
+      //this.previewDatathis.submitData;
+      // this.f["send_from"].reset();
+      // this.f["send_to"].reset();
+    } else {
+      // Form is invalid, display validation errors
+      this.flow_masterForm.markAllAsTouched();
+    }
   }
 
   removeField(index: number): void {
-    if(this.previewData.length < 2){
+    if (this.previewData.length < 2) {
       this.toastr.error("Minimum 1 Record is required")
-    } else{
+    } else {
       this.previewData.splice(index, 1);
-    }    
+    }
   }
 
 
@@ -130,45 +129,27 @@ export class AddFlowMasterComponent implements OnInit {
     this.previewData = this.flow_masterForm.value;
   }
 
-  onSelectionChange(event: any) {
-    const selectedValue = event.value;
-    console.log('Selection Changed:', selectedValue);
-  }
-
-  selectEvent(item: any) {
-    // do something with selected item
-  }
-
-  onChangeSearch(search: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
-  }
-
-  onFocused(e: any) {
-    // do something
-  }
-
   onSubmit(): void {
-    try{
-      if(this.previewData.length > 0){
-          this.previewData.forEach((item) => {
-            delete item.designation_id;
-            delete item.send_from_id;
-            delete item.send_to_id;
-            this.finalData.push({
-              designation: item.designation.id,
-              send_from: item.send_from.id,
-              send_to: item.send_to.id
-            })
+    try {
+      if (this.previewData.length > 0) {
+        this.previewData.forEach((item) => {
+          delete item.designation_id;
+          delete item.send_from_id;
+          delete item.send_to_id;
+          this.finalData.push({
+            designation: item.designation.id,
+            send_from: item.send_from.id,
+            send_to: item.send_to.id
           })
+        })
       }
       if (this.isAddMode) {
         this.createFlowMaster();
       } else {
         this.updateFlowMaster();
       }
-      
-    } catch(error: any){
+
+    } catch (error: any) {
       this.toastr.error(error.message);
     }
   }
@@ -180,7 +161,7 @@ export class AddFlowMasterComponent implements OnInit {
         next: (response: any) => {
           var resultData: any[] = [];
           response.data.map((item: any) => {
-            resultData.push({id: item.id, name: item.role_name});
+            resultData.push({ id: item.id, name: item.role_name });
           })
           this.data = resultData;
           this.roleData = response.data;
@@ -191,43 +172,42 @@ export class AddFlowMasterComponent implements OnInit {
         }
       });
   }
+
   //Create Flow master
   private createFlowMaster() {
     try {
-        console.log(this.finalData);
-        this.commonService.CreateWithAuth(`${this.base_url}`, this.finalData).pipe(first()).subscribe({
-          next: (response: any) => {
-            this.toastr.success(response.message);
-            this.router.navigate(["/main/flow-master"]);
-          },
-          error: (err: any) => {
-            this.toastr.error(err.error.message);
-          },
-          complete: () => console.log('completed')
-        });
-      } catch (error: any) {
-        this.toastr.error(error.message);
-      }
-}
-
-//Update Flow Master
-private updateFlowMaster() {
-  try {
-    this.commonService.update(`${this.base_url}`,this.id, this.finalData).pipe(first()).subscribe({
-      next: (response: any) => {
-        this.toastr.success(response.message);
-        this.router.navigate(["/main/flow-master"]);
-      },
-      error: (err: any) => {
-        this.toastr.error(err.error.message);
-      },
-      complete: () => console.log('completed')
-    });
-  } catch (error: any) {
-    this.toastr.error(error.message);
+      this.commonService.CreateWithAuth(`${this.base_url}`, this.finalData).pipe(first()).subscribe({
+        next: (response: any) => {
+          this.toastr.success(response.message);
+          this.router.navigate(["/main/flow-master"]);
+        },
+        error: (err: any) => {
+          this.toastr.error(err.error.message);
+        }
+      });
+    } catch (error: any) {
+      this.toastr.error(error.message);
+    }
   }
-}
 
+  //Update Flow Master
+  private updateFlowMaster() {
+    try {
+      this.commonService.update(`${this.base_url}`, this.id, this.finalData).pipe(first()).subscribe({
+        next: (response: any) => {
+          this.toastr.success(response.message);
+          this.router.navigate(["/main/flow-master"]);
+        },
+        error: (err: any) => {
+          this.toastr.error(err.error.message);
+        }
+      });
+    } catch (error: any) {
+      this.toastr.error(error.message);
+    }
+  }
+
+  //Reset Grid
   onReset(): void {
     this.submitted = false;
     this.previewData = [];
@@ -235,14 +215,14 @@ private updateFlowMaster() {
     this.flow_masterForm.reset();
   }
 
+  //Swap Rank For Grid before submit
   swapRank(length: number, index1: any, index2: number, direction: string): void {
-    if(index2 === -1){
+    if (index2 === -1) {
       this.toastr.error("This one rank is already on top");
-    } else if(index2 === length){
+    } else if (index2 === length) {
       this.toastr.error("This one rank is already on down");
     } else {
       [this.previewData[index1], this.previewData[index2]] = [this.previewData[index2], this.previewData[index1]];
-      console.log(this.previewData);
     }
   }
 }

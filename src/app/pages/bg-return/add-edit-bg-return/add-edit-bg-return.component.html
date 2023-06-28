@@ -1,0 +1,35 @@
+<div class="container-fluid">
+	<section id="basic-form-layouts">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title-wrap bar-warning">
+							<div class="row pt-3">
+								<div class="col-md-6">
+									<h4 class="card-title" id="basic-layout-form-center" *ngIf="isAddMode">
+										{{BG_CONSTANT.bgReturn.addBgReturn}}</h4>
+									<h4 class="card-title" id="basic-layout-form-center" *ngIf="!isAddMode">
+										{{BG_CONSTANT.bgReturn.editBgReturn}}
+									</h4>
+								</div>
+								<div class="col-md-6">
+									<a [routerLink]="['/main/bg-return']"
+										class="btn mr-1 shadow-z-2 btn-success float-right">{{BG_CONSTANT.back}}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<ngx-spinner bdColor="grey" size="small" color="#fff" type="ball-scale-multiple"
+							*ngIf="isLoading" [fullScreen]="true"
+							template="<img src='../../../assets/img/Loading_2.gif' />">
+						</ngx-spinner>
+						<div class="px-3">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
